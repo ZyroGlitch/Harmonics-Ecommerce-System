@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background-color: white !important;
+}
+
+.navbar-transparent {
+    backdrop-filter: blur(4px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.21);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+p,
+label {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.content {
+    width: 80%;
+    margin-left: 20%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-item {
+    background-color: #f8f9fa;
+    color: black;
+    text-decoration: none;
+}
+
+/* Apply hover effect only when the link is NOT active */
+.sidebar-item:not(.active):hover {
+    color: #198754;
+}
+
+/* Active link styling */
+.sidebar-item.active {
+    background-color: #198754;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Screen Size */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        flex: 0 0 100% !important;
+        max-width: 100%;
+        margin-left: 0 !important;
+    }
+
+    .humburger-hidden {
+        display: block !important;
+    }
+}
+
+/* Tablet Screen Size */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        flex: 0 0 100% !important;
+        max-width: 100%;
+        margin-left: 0 !important;
+    }
+
+    .humburger-hidden {
+        display: block !important;
+    }
+}
+
+/* Laptop to Higher Screen Size */
+@media (min-width: 1024px) {
+    .humburger-hidden {
+        display: none !important;
+    }
+}
