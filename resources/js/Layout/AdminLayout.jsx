@@ -151,7 +151,7 @@ export default function AdminLayout({ children }) {
 
                         <div style={{ marginTop: '235px' }}>
                             <Link
-                                href={route('customer.index')}
+                                href={route('guest.index')}
                                 className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.index') ? 'active' : ''}`}
                             >
                                 <IoExit /> Logout

@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -16,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('firstname',length:100);
             $table->string('lastname',length:100);
-            $table->string('contact_number',length:11)->unique();
-            $table->string('role',length:50);
-            $table->string('username',length:100)->unique();
-            $table->string('password',length:100);
-            $table->string('profile');
+            $table->string('phone',length:11)->unique();
+            $table->string('address');
+            $table->string('role',length:30)->default('Customer');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('profile')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

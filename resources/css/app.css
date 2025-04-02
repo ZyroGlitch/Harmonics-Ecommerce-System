@@ -3,6 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif !important;
     background-color: white !important;
+    overflow-x: hidden !important;
 }
 
 .navbar-transparent {

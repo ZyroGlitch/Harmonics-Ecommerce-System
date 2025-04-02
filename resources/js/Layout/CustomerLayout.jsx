@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from '../../../public/assets/images/logo.png'
 import profile from '../../../public/assets/images/profile.png'
 import { Link, useForm, usePage } from '@inertiajs/react'
@@ -7,6 +7,9 @@ import { IoExit } from "react-icons/io5";
 import { FaBars, FaUserLarge } from "react-icons/fa6";
 import { useRoute } from '../../../vendor/tightenco/ziggy'
 import MetaTagsLayout from './MetaTagsLayout';
+
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 
 export default function CustomerLayout({ children }) {
@@ -27,8 +30,14 @@ export default function CustomerLayout({ children }) {
                 console.error("Logout failed", errors);
             }
         });
-
     };
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000, // Animation duration in milliseconds
+            once: true, // Whether animation should happen only once
+        });
+    }, []);
 
     return (
         <>
@@ -148,7 +157,7 @@ export default function CustomerLayout({ children }) {
 
                         <div style={{ position: 'absolute', bottom: '2vh' }}>
                             <Link
-                                href={route('customer.index')}
+                                href={route('guest.index')}
                                 className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.index') ? 'active' : ''}`}
                             ><IoExit /> Logout
                             </Link>
