@@ -7,13 +7,17 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 export default function Login() {
     const route = useRoute();
     const { data, setData, post, processing, errors, reset } = useForm({
-        username: '',
+        email: '',
         password: '',
     });
 
     function submit(e) {
         e.preventDefault();
-        post(route('customer.authentication'), { onSuccess() { reset(); } });
+        post(route('guest.authentication'), {
+            onSuccess() {
+                reset();
+            }
+        });
     }
 
     const { flash } = usePage().props
@@ -35,21 +39,40 @@ export default function Login() {
                     <div className="card-body bg-light px-5 py-3">
                         <form onSubmit={submit}>
                             <div className="text-center mb-2">
-                                <img src={logo} alt="logo" className="object-fit-cover rounded-circle shadow-lg" style={{ width: '120px', height: '120px' }} />
+                                <img src={logo} alt="logo" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '120px', height: '120px' }} />
                             </div>
 
                             <h2 className="text-success text-center mb-4">Harmonics</h2>
 
                             <div className="mb-3">
-                                <label htmlFor="username" className="form-label">Username</label>
-                                <input type="text" className="form-control shadow-sm" id="username" value={data.username} onChange={(e) => setData('username', e.target.value)} />
-                                {errors.username && <p className='text-danger mt-2'>{errors.username}</p>}
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input
+                                    type="email"
+                                    className="form-control shadow-sm"
+                                    id="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                />
+                                {
+                                    errors.email &&
+                                    <p className='text-danger mt-2'>
+                                        {errors.email}
+                                    </p>
+                                }
                             </div>
 
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>
                                 <input type={showPassword ? 'text' : 'password'} className="form-control shadow-sm" id="password" value={data.password} onChange={(e) => setData('password', e.target.value)} />
-                                {errors.password && (<p className='text-danger mt-2' style={{ maxWidth: '380px', wordWrap: 'break-word' }}>{errors.password}</p>)}
+                                {
+                                    errors.password && (
+                                        <p
+                                            className='text-danger mt-2'
+                                            style={{ maxWidth: '380px', wordWrap: 'break-word' }}>
+                                            {errors.password}
+                                        </p>
+                                    )
+                                }
                             </div>
 
                             <div className="form-check mb-4">
@@ -62,16 +85,25 @@ export default function Login() {
                                 className="btn btn-success shadow w-100 mb-3"
                                 disabled={processing} value="Log In"
                             />
-                            {flash.error && (<p className='text-danger text-center'>{flash.error}</p>)}
+                            {
+                                flash.error && (
+                                    <p className='text-danger text-center'>
+                                        {flash.error}
+                                    </p>
+                                )
+                            }
 
                             <div className="text-center">
-                                <Link href={route('guest.register')} className='text-dark' style={{ textDecoration: 'none' }}>Don't have an account?
+                                <Link
+                                    href={route('guest.register')}
+                                    className='text-dark'
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    Don't have an account?
                                     <span className="text-success"> Sign up now.</span>
                                 </Link>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>

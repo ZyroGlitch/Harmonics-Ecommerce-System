@@ -106,7 +106,7 @@ export default function Index() {
                         </ul>
 
                         <Link
-                            href={route('guest.login')}
+                            href={route('guest.register')}
                             className={`btn login-btn ${isScrolled ? 'btn-outline-success' : 'btn-outline-light'}`}
                         >
                             Create Account
@@ -156,12 +156,13 @@ export default function Index() {
                                 </h3>
 
                                 {/* Improved Button Styling */}
-                                <button
+                                <Link
+                                    href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
                                     style={{ fontSize: '1.2rem', width: '250px' }}
                                 >
                                     Buy Now!
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -197,12 +198,13 @@ export default function Index() {
                                 </h3>
 
                                 {/* Improved Button Styling */}
-                                <button
+                                <Link
+                                    href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
                                     style={{ fontSize: '1.2rem', width: '250px' }}
                                 >
                                     Buy Now!
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -238,12 +240,13 @@ export default function Index() {
                                 </h3>
 
                                 {/* Improved Button Styling */}
-                                <button
+                                <Link
+                                    href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
                                     style={{ fontSize: '1.2rem', width: '250px' }}
                                 >
                                     Buy Now!
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -286,7 +289,12 @@ export default function Index() {
                                         <p className="mb-3">50 stocks left</p>
 
                                         <div className="d-grid">
-                                            <button className="btn btn-success">Buy</button>
+                                            <Link
+                                                href={route('guest.login')}
+                                                className="btn btn-success"
+                                            >
+                                                Buy
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +370,6 @@ export default function Index() {
                 </div>
             </section>
 
-
             <section className="container vh-100" style={{ paddingTop: '120px' }} id='contact'>
                 <div className="row justify-content-between align-items-center">
                     <div className="col-md-5"
@@ -412,7 +419,7 @@ export default function Index() {
                         <div className="col-md-4 d-flex flex-column gap-3">
                             <h5>Get Started</h5>
                             <p>
-                                <a href="#" className='text-light' style={{ textDecoration: 'none' }}>Create an Account</a>
+                                <a href={route('guest.register')} className='text-light' style={{ textDecoration: 'none' }}>Create an Account</a>
                             </p>
 
                             <p>
@@ -426,7 +433,7 @@ export default function Index() {
                                 <a href="#home" className='text-light' style={{ textDecoration: 'none' }}>Home</a>
                             </p>
                             <p>
-                                <a href="#shop" className='text-light' style={{ textDecoration: 'none' }}>Shop</a>
+                                <a href="#products" className='text-light' style={{ textDecoration: 'none' }}>Products</a>
                             </p>
                             <p>
                                 <a href="#about" className='text-light' style={{ textDecoration: 'none' }}>About</a>
