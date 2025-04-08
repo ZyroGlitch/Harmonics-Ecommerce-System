@@ -22,7 +22,7 @@ export default function Register() {
 
     function submit(e) {
         e.preventDefault();
-        post(route('guest.authentication'), {
+        post(route('guest.create_account'), {
             onSuccess() {
                 reset();
             }
@@ -74,7 +74,7 @@ export default function Register() {
 
                                         <Link
                                             href={route('guest.login')}
-                                            className='d-flex align-items-center gap-2 text-success'
+                                            className='btn btn-outline-success shadow-sm d-flex align-items-center gap-2'
                                             style={{ textDecoration: 'none' }}
                                         >
                                             Log in <FaArrowRightLong />

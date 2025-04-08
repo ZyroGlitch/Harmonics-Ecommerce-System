@@ -4,9 +4,10 @@ import profile from '../../../public/assets/images/profile.png'
 import { Link, useForm, usePage } from '@inertiajs/react'
 import { BsFillGridFill, BsBagFill, BsCartFill, BsClipboard2CheckFill } from "react-icons/bs";
 import { IoExit } from "react-icons/io5";
-import { FaBars, FaUserLarge } from "react-icons/fa6";
+import { FaBars, FaUserLarge, FaStore, FaBell, FaEnvelope } from "react-icons/fa6";
 import { useRoute } from '../../../vendor/tightenco/ziggy'
 import MetaTagsLayout from './MetaTagsLayout';
+
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -16,7 +17,7 @@ export default function CustomerLayout({ children }) {
     const route = useRoute();
 
     // Get the authenticated user credentials
-    // const { auth } = usePage().props
+    const { auth } = usePage().props
 
     // const { post } = useForm();
 
@@ -47,9 +48,9 @@ export default function CustomerLayout({ children }) {
                 <div className="bg-light shadow p-3 sidebar" style={{ width: '20%', height: '100vh', position: 'fixed' }}>
                     <div className="d-flex align-items-center gap-2 mb-4">
                         <div className="text-center">
-                            <img src={logo} alt="logo" className="object-fit-cover" style={{ width: '50px', height: '50px' }} />
+                            <img src={logo} alt="logo" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '50px', height: '50px' }} />
                         </div>
-                        <h2 className='text-success'>EverBloom</h2>
+                        <h3 className='text-success'>Harmonics</h3>
                     </div>
 
                     <nav className="d-flex flex-column gap-1">
@@ -63,6 +64,11 @@ export default function CustomerLayout({ children }) {
                             <BsClipboard2CheckFill /> Orders
                         </Link>
                         <Link className="d-flex align-items-center gap-2 rounded p-2 sidebar-item">
+                            <FaStore /> About
+                        </Link>
+                        <Link href={route('customer.profile')}
+                            className="d-flex align-items-center gap-2 rounded p-2 sidebar-item"
+                        >
                             <FaUserLarge /> Profile
                         </Link>
                     </nav>
@@ -78,12 +84,17 @@ export default function CustomerLayout({ children }) {
                 </div>
 
                 <div className="bg-light content">
-                    <nav className="d-flex justify-content-between align-items-center bg-primary text-light px-3 py-2 sticky-top">
+                    <nav className="d-flex justify-content-between align-items-center bg-success shadow-sm px-3 py-2 sticky-top">
                         <div className="d-flex align-items-center gap-3">
                             <button className="btn btn-light humburger-hidden" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"><FaBars /></button>
 
-                            {/* <img src={auth.user ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
-                            <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5> */}
+                            <img src={auth.user ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
+                            <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5>
+                        </div>
+
+                        <div className='d-flex align-items-center gap-4'>
+                            <Link href='' className='text-light fs-5'><FaEnvelope /></Link>
+                            <Link href='' className='text-light fs-5'><FaBell /></Link>
                         </div>
                     </nav>
 

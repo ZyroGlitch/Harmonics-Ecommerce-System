@@ -7,10 +7,9 @@ import {
     BarElement,
     Title,
     Tooltip,
-    Legend
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
 export default function SalesChart({ topSellingProducts }) {
     if (!topSellingProducts || topSellingProducts.length === 0) {
@@ -34,8 +33,7 @@ export default function SalesChart({ topSellingProducts }) {
         indexAxis: "y",
         responsive: true,
         plugins: {
-            legend: { display: true, position: "top" },
-            title: { display: true, text: "Top-Selling Products", font: { size: 18 } },
+            legend: { display: false }, // Removed the legend
             tooltip: { enabled: true },
         },
         scales: {
@@ -50,4 +48,3 @@ export default function SalesChart({ topSellingProducts }) {
         </div>
     );
 }
-

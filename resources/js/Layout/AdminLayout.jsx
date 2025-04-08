@@ -4,8 +4,12 @@ import profile from '../../../public/assets/images/profile.png'
 import { Link, usePage } from '@inertiajs/react'
 import { BsFillGridFill, BsBagFill, BsCartFill, BsClipboard2CheckFill } from "react-icons/bs";
 import { IoExit, IoPeople } from "react-icons/io5";
-import { FaBars, FaUserLarge, FaCubes, FaCoins } from "react-icons/fa6";
+import {
+    FaBars, FaUserLarge, FaCubes, FaCoins,
+    FaBell, FaEnvelope, FaChartPie, FaCartShopping
+} from "react-icons/fa6";
 import { useRoute } from '../../../vendor/tightenco/ziggy'
+
 import MetaTagsLayout from './MetaTagsLayout';
 
 
@@ -25,7 +29,7 @@ export default function AdminLayout({ children }) {
                 <div className="bg-light shadow p-3 sidebar" style={{ width: '20%', height: '100vh', position: 'fixed' }}>
                     <div className="d-flex align-items-center gap-2 mb-4">
                         <div className="text-center">
-                            <img src={logo} alt="logo" className="object-fit-cover" style={{ width: '50px', height: '50px' }} />
+                            <img src={logo} alt="logo" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '50px', height: '50px' }} />
                         </div>
 
                         <h2 className='text-success'>EverBloom</h2>
@@ -42,43 +46,49 @@ export default function AdminLayout({ children }) {
 
 
                         <Link
-                            href={route('admin.sales')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.sales') ? 'active' : ''}`}
+                            href={route('admin.product')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.product') ? 'active' : ''}`}
                         >
-                            <FaCoins /> Sales
+                            <FaCoins /> Product
                         </Link>
 
                         <Link
-                            href={route('admin.inventory')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.inventory') ? 'active' : ''}`}
+                            href={route('admin.orders')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.orders') ? 'active' : ''}`}
                         >
-                            <FaCubes /> Inventory
+                            <FaCubes /> Orders
                         </Link>
 
                         <Link
-                            href={route('admin.employee')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.employee') ? 'active' : ''}`}
+                            href={route('admin.salesReport')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.salesReport') ? 'active' : ''}`}
                         >
-                            <IoPeople /> Employee
+                            <IoPeople /> Sales Report
                         </Link>
 
                         <Link
-                            href={route('admin.profile')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.profile') ? 'active' : ''}`}
+                            href={route('admin.customers')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.customers') ? 'active' : ''}`}
                         >
-                            <FaUserLarge /> Profile
+                            <FaUserLarge /> Customers
+                        </Link>
+
+                        <Link
+                            href={route('admin.messages')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.messages') ? 'active' : ''}`}
+                        >
+                            <FaUserLarge /> Messages
                         </Link>
                     </nav>
 
-                    <div style={{ marginTop: '285px' }}>
+                    <div style={{ position: 'absolute', bottom: '2vh' }}>
                         <Link
-                            href={route('customer.index')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.index') ? 'active' : ''}`}
+                            href={route('admin.logout')}
+                            className="d-flex align-items-center gap-2 rounded p-2 sidebar-item"
                         >
                             <IoExit /> Logout
                         </Link>
                     </div>
-
                 </div>
 
                 {/* Content Area (Scrollable) */}
@@ -89,6 +99,11 @@ export default function AdminLayout({ children }) {
 
                             <img src={auth.user ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
                             <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5>
+                        </div>
+
+                        <div className='d-flex align-items-center gap-4'>
+                            <Link href='' className='text-light fs-5'><FaEnvelope /></Link>
+                            <Link href='' className='text-light fs-5'><FaBell /></Link>
                         </div>
                     </nav>
 
@@ -114,36 +129,36 @@ export default function AdminLayout({ children }) {
                     <div class="offcanvas-body d-flex flex-column gap-1 bg-light">
                         <nav className="d-flex flex-column gap-1">
                             <Link
-                                href={route('admin.dashboard')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.dashboard') ? 'active' : ''}`}
+                                // href={route('admin.dashboard')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.dashboard') ? 'active' : '' */ ''}`}
                             >
                                 <BsFillGridFill /> Dashboard
                             </Link>
 
                             <Link
-                                href={route('admin.sales')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.sales') ? 'active' : ''}`}
+                                // href={route('admin.sales')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.sales') ? 'active' : '' */ ''}`}
                             >
                                 <FaCoins /> Sales
                             </Link>
 
                             <Link
-                                href={route('admin.inventory')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.inventory') ? 'active' : ''}`}
+                                // href={route('admin.inventory')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.inventory') ? 'active' : '' */ ''}`}
                             >
                                 <FaCubes /> Inventory
                             </Link>
 
                             <Link
-                                href={route('admin.employee')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.employee') ? 'active' : ''}`}
+                                // href={route('admin.employee')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.employee') ? 'active' : '' */ ''}`}
                             >
                                 <IoPeople /> Employee
                             </Link>
 
                             <Link
-                                href={route('admin.profile')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.profile') ? 'active' : ''}`}
+                                // href={route('admin.profile')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.profile') ? 'active' : '' */ ''}`}
                             >
                                 <FaUserLarge /> Profile
                             </Link>
@@ -151,8 +166,8 @@ export default function AdminLayout({ children }) {
 
                         <div style={{ marginTop: '235px' }}>
                             <Link
-                                href={route('guest.index')}
-                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.index') ? 'active' : ''}`}
+                                // href={route('guest.index')}
+                                className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${/* route().current('admin.index') ? 'active' : '' */ ''}`}
                             >
                                 <IoExit /> Logout
                             </Link>

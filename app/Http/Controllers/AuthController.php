@@ -73,7 +73,12 @@ class AuthController
             if($user->role === 'Customer'){
                  // Redirect to customer dashboard
                 return redirect()->route('customer.dashboard');
+                
+            }else if($user->role === 'Admin'){
+                 // Redirect to admin dashboard
+                return redirect()->route('admin.dashboard');
             }
+
         }else{
             return redirect()->back()->with('error', 'Login failed! Please try again.');
         }

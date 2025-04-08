@@ -85,13 +85,6 @@ export default function Login() {
                                 className="btn btn-success shadow w-100 mb-3"
                                 disabled={processing} value="Log In"
                             />
-                            {
-                                flash.error && (
-                                    <p className='text-danger text-center'>
-                                        {flash.error}
-                                    </p>
-                                )
-                            }
 
                             <div className="text-center">
                                 <Link
@@ -103,6 +96,14 @@ export default function Login() {
                                     <span className="text-success"> Sign up now.</span>
                                 </Link>
                             </div>
+
+                            {
+                                flash.error && (
+                                    <p className='text-danger text-center mt-2'>
+                                        {flash.error}
+                                    </p>
+                                )
+                            }
                         </form>
                     </div>
                 </div>
