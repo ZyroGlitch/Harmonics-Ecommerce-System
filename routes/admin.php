@@ -38,8 +38,22 @@ Route::middleware(['auth', AdminMiddleware::class])
     Route::get('/admin/sales/report',[AdminController::class,'salesReport'])
         ->name('salesReport');
 
-    Route::get('/admin/customers',[AdminController::class,'customers'])
-        ->name('customers');
+    // --------------------------------------------------------------------------------------
+
+    // Employee Routes
+    Route::get('/admin/employee',[AdminController::class,'employee'])
+        ->name('employee');
+
+    Route::get('/admin/employee/add',[AdminController::class,'addEmployee'])
+        ->name('addEmployee');
+    
+    Route::post('/admin/employee/store',[AdminController::class,'storeEmployeeData'])
+        ->name('storeEmployeeData');
+
+    Route::get('/admin/employee/viewProfile/{employee_id}',[AdminController::class,'viewProfile'])
+        ->name('viewProfile');
+
+    // --------------------------------------------------------------------------------------
 
     Route::get('/admin/messages',[AdminController::class,'messages'])
         ->name('messages');

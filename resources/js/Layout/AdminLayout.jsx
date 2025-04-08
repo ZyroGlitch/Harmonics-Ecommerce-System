@@ -49,7 +49,7 @@ export default function AdminLayout({ children }) {
                             href={route('admin.product')}
                             className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.product') ? 'active' : ''}`}
                         >
-                            <FaCoins /> Product
+                            <BsBagFill /> Product
                         </Link>
 
                         <Link
@@ -63,21 +63,21 @@ export default function AdminLayout({ children }) {
                             href={route('admin.salesReport')}
                             className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.salesReport') ? 'active' : ''}`}
                         >
-                            <IoPeople /> Sales Report
+                            <FaChartPie /> Sales Report
                         </Link>
 
                         <Link
-                            href={route('admin.customers')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.customers') ? 'active' : ''}`}
+                            href={route('admin.employee')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.employee') ? 'active' : ''}`}
                         >
-                            <FaUserLarge /> Customers
+                            <IoPeople /> Employee
                         </Link>
 
                         <Link
                             href={route('admin.messages')}
                             className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.messages') ? 'active' : ''}`}
                         >
-                            <FaUserLarge /> Messages
+                            <FaEnvelope /> Messages
                         </Link>
                     </nav>
 

@@ -3,56 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 
 class AdminController
 {
     // ---------------------------------------------------------------------------------------
 
     // Product Functions
-public function product(Request $request) {
-    // Debugging: Check incoming request data
-    // dd($request->all());
+    public function product(Request $request) {
+        $query = Product::select('id','product_name', 'description', 'category', 'price', 'stocks', 'status', 'image');
 
-    $query = Product::select('id','product_name', 'description', 'category', 'price', 'stocks', 'status', 'image');
-
-    // Search by product name
-    if ($request->filled('searchByName')) {
-        $query->where('product_name', 'like', '%' . $request->searchByName . '%');
-    }
-
-    // Sorting by price range
-    if ($request->filled('sortByPrice')) {
-        switch ($request->sortByPrice) {
-            case 'low price':
-                $query->where('price', '<', 1000);
-                break;
-            case 'mid price':
-                $query->whereBetween('price', [1000, 4999]);
-                break;
-            case 'high price':
-                $query->where('price', '>=', 5000);
-                break;
+        // Search by product name
+        if ($request->filled('searchByName')) {
+            $query->where('product_name', 'like', '%' . $request->searchByName . '%');
         }
+
+        // Sorting by price range
+        if ($request->filled('sortByPrice')) {
+            switch ($request->sortByPrice) {
+                case 'low price':
+                    $query->where('price', '<', 1000);
+                    break;
+                case 'mid price':
+                    $query->whereBetween('price', [1000, 4999]);
+                    break;
+                case 'high price':
+                    $query->where('price', '>=', 5000);
+                    break;
+            }
+        }
+
+        // Sorting by status
+        if ($request->filled('sortByStatus')) {
+            $query->where('status', $request->sortByStatus);
+        }
+
+        // Default sorting if no sorting parameter is set
+        if (!$request->has('sortByPrice')) {
+            $query->orderBy('price', 'asc');
+        }
+
+        // Get paginated products
+        $products = $query->paginate(9);
+
+        return inertia('Admin/Product', ['products' => $products]);
     }
-
-    // Sorting by status
-    if ($request->filled('sortByStatus')) {
-        $query->where('status', $request->sortByStatus);
-    }
-
-    // Default sorting if no sorting parameter is set
-    if (!$request->has('sortByPrice')) {
-        $query->orderBy('price', 'asc');
-    }
-
-    // Get paginated products
-    $products = $query->paginate(9);
-
-    return inertia('Admin/Product', ['products' => $products]);
-}
 
 
     public function addProduct(){
@@ -141,9 +141,73 @@ public function product(Request $request) {
         return inertia('Admin/SalesReport');
     }
 
-    public function customers(){
-        return inertia('Admin/Customers');
+    // ---------------------------------------------------------------------------------------
+
+    // Employee Functions
+    public function employee(){
+        $employees = User::where('role','Manager')
+        ->latest()
+        ->paginate(9);
+
+        return inertia('Admin/Employee',['employees' => $employees]);
     }
+
+    public function addEmployee(){
+        return inertia('Admin/Employee_Features/AddEmployee');
+    }
+
+    public function storeEmployeeData(Request $request){
+        // dd($request);
+        $fields = $request->validate([
+            'firstname' => 'required|string|max:100',
+            'lastname' => 'required|string|max:100',
+            'phone' =>  'required|min:11|max:11|unique:users,phone',
+            'address' => 'required|string',
+            'role' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
+            'profile' => 'required|file|mimes:jpg,jpeg,png|max:5120'
+        ]);
+
+        $fields['password'] = Hash::make($fields['password']);
+
+        if($request->hasFile('profile')){
+            $fields['profile'] = Storage::disk('public')->put('profiles',$fields['profile']);
+
+            $employee = User::create([
+                'firstname' => $fields['firstname'],
+                'lastname' => $fields['lastname'],
+                'phone' => $fields['phone'],
+                'address' => $fields['address'],
+                'role' => $fields['role'],
+                'email' => $fields['email'],
+                'password' => $fields['password'],
+                'profile' => $fields['profile'],
+            ]);
+
+            if($employee){
+                return redirect()->route('admin.addEmployee')->with('success', $fields['firstname'] . ' data stored successfully.');
+            }else{
+                return redirect()->back()->with('error','Failed to store the data.');
+            }
+        }
+    }
+
+    public function viewProfile($employee_id){
+        // dd($employee_id);
+        $employee_info = User::find($employee_id);
+        return inertia('Admin/Employee_Features/ViewProfile',['employee_info' => $employee_info]);
+    }
+
+    // ---------------------------------------------------------------------------------------
 
     public function messages(){
         return inertia('Admin/Messages');
