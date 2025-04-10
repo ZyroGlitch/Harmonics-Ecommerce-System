@@ -207,6 +207,65 @@ class AdminController
         return inertia('Admin/Employee_Features/ViewProfile',['employee_info' => $employee_info]);
     }
 
+    public function updateUserInfo(Request $request){
+        // dd($request);
+        
+        // Check if the email that submitted are existing or not
+        $exist = User::find($request->id);
+
+        if($exist){
+            $fields = $request->validate([
+                'firstname' => 'required|string',
+                'lastname' => 'required|string',
+                'phone' => 'required|string|max:11',
+                'address' => 'required|string',
+                'email' => 'required|email',
+            ]);
+        }else{
+            $fields = $request->validate([
+                'firstname' => 'required|string',
+                'lastname' => 'required|string',
+                'phone' => 'required|string|max:11',
+                'address' => 'required|string',
+                'email' => 'required|email|unique:users,email',
+            ]);
+        }
+
+        $update = User::where('id',$request->id)->update([
+            'firstname' => $fields['firstname'],
+            'lastname' => $fields['lastname'],
+            'phone' => $fields['phone'],
+            'address' => $fields['address'],
+            'email' => $fields['email'],
+        ]);
+
+        if($update){
+            return redirect()->route('admin.viewProfile',['employee_id' => $request->id])->with('success','Profile info updated successfully.');
+        }else{
+            return redirect()->back()->with('error','Profile info failed to update.');
+        }
+    }
+
+    public function updatePassword(Request $request){
+        // dd($request);
+        if($request->new_password === $request->confirm_password){
+
+            // Hash the new password
+            $request->new_password = Hash::make($request->new_password);
+
+            $updatePass = User::where('id',$request->id)->update([
+                'password' => $request->new_password,
+            ]);
+
+            if($updatePass){
+                return redirect()->route('admin.viewProfile',['employee_id' => $request->id])->with('success','User password updated successfully.');
+            }else{
+                return redirect()->back()->with('error','User password failed to update.');
+            }
+        }
+        
+    }
+
     // ---------------------------------------------------------------------------------------
 
     public function messages(){

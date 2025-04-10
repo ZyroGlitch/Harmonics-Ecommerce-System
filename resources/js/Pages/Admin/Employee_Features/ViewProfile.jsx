@@ -30,16 +30,17 @@ function ViewProfile({ employee_info }) {
         post: postUserInfo, processing: processingUserInfo,
         errors: errorsUserInfo, reset: resetUserInfo
     } = useForm({
-        'id': employee_info.id,
-        'firstname': employee_info.firstname,
-        'lastname': employee_info.lastname,
-        'contact_number': employee_info.phone,
-        'email': employee_info.email,
+        id: employee_info.id,
+        firstname: employee_info.firstname,
+        lastname: employee_info.lastname,
+        phone: employee_info.phone,
+        address: employee_info.address,
+        email: employee_info.email,
     });
 
     function submitUserInfo(e) {
         e.preventDefault();
-        postUserInfo(route('employee.updateUserInfo'), {
+        postUserInfo(route('admin.updateUserInfo'), {
             onSuccess() {
                 resetUserInfo();
             }
@@ -63,7 +64,7 @@ function ViewProfile({ employee_info }) {
 
     function submitUpdatePassword(e) {
         e.preventDefault();
-        postUserPassword(route('employee.updatePassword'), {
+        postUserPassword(route('admin.updatePassword'), {
             onSuccess() {
                 resetUserPassword();
             }
@@ -178,9 +179,14 @@ function ViewProfile({ employee_info }) {
                                                 >Lastname</label>
 
                                                 <label
-                                                    htmlFor="contact"
+                                                    htmlFor="phone"
                                                     className="form-label d-flex align-items-center" style={{ height: '38px' }}
                                                 >Contact Number</label>
+
+                                                <label
+                                                    htmlFor="address"
+                                                    className="form-label d-flex align-items-center" style={{ height: '38px' }}
+                                                >Address</label>
 
                                                 <label
                                                     htmlFor="email"
@@ -225,14 +231,30 @@ function ViewProfile({ employee_info }) {
                                                     <input
                                                         type="text"
                                                         className="form-control shadow-sm"
-                                                        id='contact'
+                                                        id='phone'
                                                         style={{ width: '500px' }}
-                                                        value={userData.contact_number}
-                                                        onChange={(e) => setUserData('contact_number', e.target.value)}
+                                                        value={userData.phone}
+                                                        onChange={(e) => setUserData('phone', e.target.value)}
                                                     />
                                                     {
-                                                        errorsUserInfo.contact_number && (
-                                                            <div className="text-danger mt-2">{errorsUserInfo.contact_number}</div>
+                                                        errorsUserInfo.phone && (
+                                                            <div className="text-danger mt-2">{errorsUserInfo.phone}</div>
+                                                        )
+                                                    }
+                                                </div>
+
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control shadow-sm"
+                                                        id='address'
+                                                        style={{ width: '500px' }}
+                                                        value={userData.address}
+                                                        onChange={(e) => setUserData('address', e.target.value)}
+                                                    />
+                                                    {
+                                                        errorsUserInfo.address && (
+                                                            <div className="text-danger mt-2">{errorsUserInfo.address}</div>
                                                         )
                                                     }
                                                 </div>
@@ -285,11 +307,6 @@ function ViewProfile({ employee_info }) {
                                         <div className="d-flex mb-5" style={{ gap: '160px' }}>
                                             <div className="d-flex flex-column gap-4">
                                                 <label
-                                                    htmlFor="current"
-                                                    className="form-label d-flex align-items-center" style={{ height: '38px' }}
-                                                >Current password</label>
-
-                                                <label
                                                     htmlFor="new"
                                                     className="form-label d-flex align-items-center" style={{ height: '38px' }}
                                                 >New password</label>
@@ -301,14 +318,6 @@ function ViewProfile({ employee_info }) {
                                             </div>
 
                                             <div className="d-flex flex-column gap-4">
-                                                <input
-                                                    type="text"
-                                                    className="form-control shadow-sm"
-                                                    id='current'
-                                                    style={{ width: '500px' }}
-                                                    value='********'
-                                                />
-
                                                 <div className="d-flex align-items-center gap-3">
                                                     <input
                                                         type={newPass ? 'text' : 'password'}

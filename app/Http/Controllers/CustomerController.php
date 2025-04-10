@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,63 @@ use Illuminate\Validation\Rules\Password;
 
 class CustomerController
 {
+    // --------------------------------------------------------------------------------------
+
+    public function product(Request $request){
+        // dd($request);
+        // $products = Product::orderByRaw("FIELD(status, 'In Stock', 'Low of Stock', 'Out of Stock')")
+        // ->latest()
+        // ->paginate(12);
+
+        $query = Product::select('id','product_name', 'description', 'category', 'price', 'stocks', 'status', 'image')
+        ->orderByRaw("FIELD(status, 'In Stock', 'Low of Stock', 'Out of Stock')");
+
+        // Search by product name
+        if ($request->filled('searchByName')) {
+            $query->where('product_name', 'like', '%' . $request->searchByName . '%');
+        }
+
+        // Sorting by price range
+        if ($request->filled('sortByPrice')) {
+            switch ($request->sortByPrice) {
+                case 'All':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'low price':
+                    $query->where('price', '<', 1000);
+                    break;
+                case 'mid price':
+                    $query->whereBetween('price', [1000, 4999]);
+                    break;
+                case 'high price':
+                    $query->where('price', '>=', 5000);
+                    break;
+            }
+        }
+
+        // Sorting by status
+        if ($request->filled('sortByStatus')) {
+            if($request->sortByStatus != 'All'){
+                $query->where('status', $request->sortByStatus);
+            }else{
+                $query->orderByRaw("FIELD(status, 'In Stock', 'Low of Stock', 'Out of Stock')");
+            }
+        }
+
+        // Get paginated products
+        $products = $query->paginate(12);
+        
+        return inertia('Customer/Products',['products' => $products]);
+    }
+
+    public function showProduct($product_id){
+        $product = Product::find($product_id);
+
+        return inertia('Customer/Product_Features/ShowProduct',['product' => $product]);
+    }
+
+    // --------------------------------------------------------------------------------------
+
     public function profile(){
         $user = auth()->user();
         $customer = User::find($user->id)->fresh();

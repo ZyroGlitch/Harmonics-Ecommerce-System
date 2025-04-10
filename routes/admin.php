@@ -53,6 +53,12 @@ Route::middleware(['auth', AdminMiddleware::class])
     Route::get('/admin/employee/viewProfile/{employee_id}',[AdminController::class,'viewProfile'])
         ->name('viewProfile');
 
+    Route::post('/admin/employee/update/info',[AdminController::class,'updateUserInfo'])
+        ->name('updateUserInfo');
+
+    Route::post('/admin/employee/update/password',[AdminController::class,'updatePassword'])
+        ->name('updatePassword');
+
     // --------------------------------------------------------------------------------------
 
     Route::get('/admin/messages',[AdminController::class,'messages'])

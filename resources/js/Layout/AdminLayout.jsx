@@ -32,7 +32,7 @@ export default function AdminLayout({ children }) {
                             <img src={logo} alt="logo" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '50px', height: '50px' }} />
                         </div>
 
-                        <h2 className='text-success'>EverBloom</h2>
+                        <h3 className='text-success'>Harmonics</h3>
                     </div>
 
 

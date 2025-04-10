@@ -54,20 +54,33 @@ export default function CustomerLayout({ children }) {
                     </div>
 
                     <nav className="d-flex flex-column gap-1">
-                        <Link className="d-flex align-items-center gap-2 rounded p-2 sidebar-item">
+                        <Link
+                            href={route('customer.dashboard')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.dashboard') ? 'active' : ''}`}
+                        >
                             <BsBagFill /> Products
                         </Link>
-                        <Link className="d-flex align-items-center gap-2 rounded p-2 sidebar-item">
+                        <Link
+                            href={route('customer.cart')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.cart') ? 'active' : ''}`}
+                        >
                             <BsCartFill /> Cart
                         </Link>
-                        <Link className="d-flex align-items-center gap-2 rounded p-2 sidebar-item">
+                        <Link
+                            href={route('customer.orders')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.orders') ? 'active' : ''}`}
+                        >
                             <BsClipboard2CheckFill /> Orders
                         </Link>
-                        <Link className="d-flex align-items-center gap-2 rounded p-2 sidebar-item">
+                        <Link
+                            href={route('customer.about')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.about') ? 'active' : ''}`}
+                        >
                             <FaStore /> About
                         </Link>
-                        <Link href={route('customer.profile')}
-                            className="d-flex align-items-center gap-2 rounded p-2 sidebar-item"
+                        <Link
+                            href={route('customer.profile')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('customer.profile') ? 'active' : ''}`}
                         >
                             <FaUserLarge /> Profile
                         </Link>
