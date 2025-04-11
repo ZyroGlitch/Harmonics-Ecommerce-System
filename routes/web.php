@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -44,13 +45,24 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/dashboard/buy/product/{product_id}/{quantity}',[CartController::class,'buyProduct'])
         ->name('buyProduct');
+
+        Route::post('/dashboard/direct/buy/order',[OrderController::class,'directProductOrder'])
+        ->name('directProductOrder');
+        
         
         // --------------------------------------------------------------------------------------
 
-        Route::get('/cart',function(){
-            return inertia('Customer/Cart');
-        })
+        // Cart Routes
+        Route::get('/cart',[CartController::class,'cart'])
         ->name('cart');
+
+        Route::delete('/cart/delete/selected/{cart_id}',[CartController::class,'cart_delete'])
+        ->name('cart_delete');
+
+        Route::get('/cart/delete/{cart_id}',[CartController::class,'remove_cart'])
+        ->name('remove_cart');
+
+        // --------------------------------------------------------------------------------------
 
         Route::get('/orders',function(){
             return inertia('Customer/Orders');
