@@ -11,6 +11,8 @@ class Order extends Model
         'user_id',
         'quantity',
         'total',
+        'cash_recieved',
+        'change',
         'payment_method',
         'receipt_reference',
         'payment_receipt',

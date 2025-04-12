@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('payment_method',length:50);
             $table->string('receipt_reference',length:50);
             $table->string('payment_receipt');
-            $table->string('order_status')->default('Processing');
+            $table->string('order_status')->default('Pending');
             $table->timestamps();
         });
     }

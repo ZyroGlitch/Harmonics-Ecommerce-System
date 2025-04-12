@@ -62,12 +62,18 @@ use Illuminate\Support\Facades\Route;
         Route::get('/cart/delete/{cart_id}',[CartController::class,'remove_cart'])
         ->name('remove_cart');
 
+        Route::post('/cart/checkout/',[CartController::class,'checkout'])
+        ->name('checkout');
+
+        Route::get('/cart/checkout/invoice/{order_id}',[CartController::class,'invoice'])
+        ->name('invoice');
+
         // --------------------------------------------------------------------------------------
 
-        Route::get('/orders',function(){
-            return inertia('Customer/Orders');
-        })
+        Route::get('/orders',[OrderController::class,'orders'])
         ->name('orders');
+
+        // --------------------------------------------------------------------------------------
 
         Route::get('/about',function(){
             return inertia('Customer/About');

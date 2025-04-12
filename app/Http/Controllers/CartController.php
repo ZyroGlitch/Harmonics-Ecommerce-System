@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CartController
 {
@@ -104,5 +108,90 @@ class CartController
         } else {
             return redirect()->back()->with('error', 'No items were deleted.');
         }
+    }
+
+    public function checkout(Request $request){
+        // dd($request);
+        $fields = $request->validate([
+            'cart_id' => 'required|array',
+            'total' => 'required|numeric',
+            'payment_method' => 'required|string',
+            'receipt_reference' => 'required|string',
+            'payment_receipt' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Generate a string value of order ID
+        $generated_id = strtoupper(Str::random(12));
+
+        $user = auth()->user(); // Get authenticated user
+
+        if($request->hasFile('payment_receipt')){
+            $request->payment_receipt = Storage::disk('public')->put('payment_receipt',$request->payment_receipt);
+
+            $store_order = Order::create([
+                'id' => $generated_id,
+                'user_id' => $user->id,
+                'quantity' => 0,
+                'total' => $fields['total'],
+                'payment_method' => $fields['payment_method'],
+                'receipt_reference' => $fields['receipt_reference'],
+                'payment_receipt' => $request->payment_receipt,
+            ]);
+
+            if($store_order){
+                // Declare a summation variables
+                $quantity = 0;
+                $subtotal = 0.00;
+
+                foreach($fields['cart_id'] as $cart_id){
+                    $cart = Cart::where('id',$cart_id)->first();
+
+                    // Sum the total quantity and subtotal
+                    $quantity += $cart->quantity;
+                    $subtotal += $cart->subtotal;
+
+                    OrderDetail::create([
+                        'order_id' => $generated_id,
+                        'product_id' => $cart->product_id,
+                        'user_id' => $user->id,
+                        'quantity' => $cart->quantity,
+                        'total' => $cart->subtotal,
+                    ]);
+                }
+
+                // Update the Order with correct quantity after inserting order details
+                $updateOrder = Order::where('id',$generated_id)
+                ->update([
+                    'quantity' => $quantity,
+                ]);
+
+                if($updateOrder){
+                    // Clear all the products on the cart after successful checkout
+                    Cart::where('user_id',$user->id)->delete();
+                    
+                    return redirect()->route('customer.invoice',['order_id' => $generated_id]);
+                }else{
+                    return redirect()->back()->with('error',"Failed to checkout your orders.");
+                }
+            }
+            
+        }else{
+            return redirect()->back()
+            ->with('error', "Please provide payment receipt."); 
+        }
+    }
+
+    public function invoice($order_id){
+        // dd($order_id);
+        $order = Order::find($order_id);
+
+        $orderDetails = OrderDetail::with(['product','user'])
+        ->where('order_id',$order_id)
+        ->get();
+
+        return inertia('Customer/InvoiceReceipt',[
+            'order' => $order,
+            'orderDetails' => $orderDetails,
+        ]);
     }
 }
