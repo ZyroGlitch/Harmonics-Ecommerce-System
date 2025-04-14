@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +15,34 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminController
 {
+    public function dashboard(){
+        $currentDate = Carbon::now('Asia/Manila')->toDateString(); // e.g., '2025-04-15'
+
+        // Total sales (sum of "total" column)
+        $sales = Order::whereDate('created_at', $currentDate)
+                ->sum('total');
+
+        // Number of orders
+        $orders = Order::whereDate('created_at', $currentDate)
+                ->count('id');
+
+        // Total quantity sold
+        $sold = Order::whereDate('created_at', $currentDate)
+                ->sum('quantity');
+
+        // Number of new customers (count of users with role 'Customer')
+        $customers = User::whereDate('created_at', $currentDate)
+                        ->where('role', 'Customer')
+                        ->count('id');
+
+        return inertia('Admin/Dashboard',[
+            'sales' => $sales,
+            'orders' => $orders,
+            'sold' => $sold,
+            'customers' => $customers,
+        ]);
+    }
+
     // ---------------------------------------------------------------------------------------
 
     // Product Functions

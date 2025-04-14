@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import logo from '../../../public/assets/images/logo.png'
 import profile from '../../../public/assets/images/profile.png'
-import { Link, useForm, usePage } from '@inertiajs/react'
-import { BsFillGridFill, BsBagFill, BsCartFill, BsClipboard2CheckFill } from "react-icons/bs";
+import { Link, usePage } from '@inertiajs/react'
+import { BsBagFill, BsCartFill, BsClipboard2CheckFill } from "react-icons/bs";
 import { IoExit } from "react-icons/io5";
-import { FaBars, FaUserLarge, FaStore, FaBell, FaEnvelope } from "react-icons/fa6";
+import { FaBars, FaUserLarge, FaStore, FaBell, FaEnvelope, FaCircle } from "react-icons/fa6";
 import { useRoute } from '../../../vendor/tightenco/ziggy'
 import MetaTagsLayout from './MetaTagsLayout';
+import product from '../../../public/assets/products/gym1.png'
 
 
 import AOS from "aos";
@@ -18,20 +19,6 @@ export default function CustomerLayout({ children }) {
 
     // Get the authenticated user credentials
     const { auth } = usePage().props
-
-    // const { post } = useForm();
-
-    // const handleLogout = (e) => {
-    //     e.preventDefault();
-    //     post(route('employee.logout'), {
-    //         onSuccess: () => {
-    //             console.log("Logged out successfully");
-    //         },
-    //         onError: (errors) => {
-    //             console.error("Logout failed", errors);
-    //         }
-    //     });
-    // };
 
     useEffect(() => {
         AOS.init({
@@ -106,14 +93,94 @@ export default function CustomerLayout({ children }) {
                         </div>
 
                         <div className='d-flex align-items-center gap-4'>
-                            <Link href='' className='text-light fs-5'><FaEnvelope /></Link>
-                            <Link href='' className='text-light fs-5'><FaBell /></Link>
+                            <Link
+                                href={route('customer.inbox')}
+                                className='text-light fs-5'
+                            >
+                                <FaEnvelope />
+                            </Link>
+
+                            <Link
+                                href=''
+                                className='text-light fs-5'
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#notifications"
+                                aria-controls="offcanvasRight"
+                            >
+                                <FaBell />
+                            </Link>
                         </div>
                     </nav>
 
-                    <section className="p-3">
+                    <section>
                         {children}
                     </section>
+                </div>
+            </div>
+
+            {/* Notification Offcanvas  */}
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications" aria-labelledby="offcanvasRightLabel">
+                <div className="offcanvas-header border border-bottom">
+                    <div className="d-flex flex-column gap-1">
+                        <h4 className='text-success'>
+                            Notifications
+                        </h4>
+                        <p className='text-muted'>You have 3 Notifications today.</p>
+                    </div>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                    <Link
+                        href={route('customer.orders')}
+                        className="d-flex align-items-center gap-3 py-1 px-3 border-bottom"
+                        style={{ textDecoration: 'none' }}>
+                        <FaCircle className='text-success' style={{ fontSize: '12px' }} />
+
+                        <img
+                            src={product}
+                            alt="image"
+                            className="object-fit-cover"
+                            style={{ width: '80px', height: '80px' }}
+                        />
+
+                        <div className="d-flex flex-column gap-1">
+                            <h6 className='text-success'>Order Confirmed</h6>
+                            <p className='text-muted'>10 mins ago</p>
+                        </div>
+                    </Link>
+
+                    <div className="d-flex align-items-center gap-3 py-2 px-3 border-bottom">
+                        <FaCircle className='text-success' style={{ fontSize: '12px' }} />
+
+                        <img
+                            src={product}
+                            alt="image"
+                            className="object-fit-cover"
+                            style={{ width: '80px', height: '80px' }}
+                        />
+
+                        <div className="d-flex flex-column gap-1">
+                            <h6 className='text-success'>Order Confirmed</h6>
+                            <p className='text-muted'>10 mins ago</p>
+                        </div>
+                    </div>
+
+                    <div className="d-flex align-items-center gap-3 py-2 px-3 border-bottom">
+                        <FaCircle className='text-success' style={{ fontSize: '12px' }} />
+
+                        <img
+                            src={product}
+                            alt="image"
+                            className="object-fit-cover"
+                            style={{ width: '80px', height: '80px' }}
+                        />
+
+                        <div className="d-flex flex-column gap-1">
+                            <h6 className='text-success'>Order Confirmed</h6>
+                            <p className='text-muted'>10 mins ago</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

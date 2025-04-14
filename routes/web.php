@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\OrderController;
 use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +97,18 @@ use Illuminate\Support\Facades\Route;
         ->name('updatePassword');
 
          // --------------------------------------------------------------------------------------
+        
+        Route::get('/inbox',[EmailController::class,'inbox'])
+        ->name('inbox');
+
+        Route::get('/sent',[EmailController::class,'sent'])
+        ->name('sent');
+
+        Route::get('/drafts',[EmailController::class,'drafts'])
+        ->name('drafts');
+
+        Route::get('/trash',[EmailController::class,'trash'])
+        ->name('trash');
         
         Route::get('/customer/logout',[CustomerController::class,'logout'])
         ->name('logout');

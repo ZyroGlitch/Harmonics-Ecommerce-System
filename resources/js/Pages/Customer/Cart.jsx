@@ -100,7 +100,7 @@ function Cart({ carts, total }) {
 
 
     return (
-        <div>
+        <div className='p-3'>
             {/* Initialize the Sooner Toaster */}
             <Toaster position='top-right' expand={true} richColors />
 

@@ -11,7 +11,7 @@ function Orders({ orders, order_id }) {
     const route = useRoute();
 
     return (
-        <div>
+        <div className='p-4'>
             <h2 className='text-success mb-3'>{orders.total} Orders</h2>
             <div className="card shadow rounded-lg border-0">
                 <div className="card-body">

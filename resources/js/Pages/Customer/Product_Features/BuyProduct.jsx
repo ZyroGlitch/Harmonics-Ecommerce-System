@@ -59,7 +59,7 @@ function BuyProduct({ product, quantity }) {
     }, [flash]);
 
     return (
-        <div className='py-3'>
+        <div className='p-4'>
             {/* Initialize the Sooner Toaster */}
             <Toaster position='top-right' expand={true} richColors />
 

@@ -30,7 +30,7 @@ function Products({ products }) {
     }, [data]);
 
     return (
-        <div className='py-3'>
+        <div className='p-4'>
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div className="d-flex flex-column gap-2">
                     <label htmlFor="search" className="form-label">Product name</label>

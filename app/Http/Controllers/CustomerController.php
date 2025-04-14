@@ -179,4 +179,5 @@ class CustomerController
 
         return redirect()->route('guest.login');
     }
+
 }

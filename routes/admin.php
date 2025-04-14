@@ -8,9 +8,7 @@ Route::middleware(['auth', AdminMiddleware::class])
 ->name('admin.')
 ->group(function () {
 
-    Route::get('/admin/dashboard', function () {
-        return inertia('Admin/Dashboard');
-    })->name('dashboard');
+    Route::get('/admin/dashboard', [AdminController::class,'dashboard'])->name('dashboard');
 
     // --------------------------------------------------------------------------------------
 

@@ -1,12 +1,16 @@
 import React from 'react'
 import AdminLayout from '../../Layout/AdminLayout'
-import orders from '../../../../public/assets/images/orders.png'
-import person from '../../../../public/assets/images/person.png'
-import sales from '../../../../public/assets/images/sales.png'
-import sold from '../../../../public/assets/images/sold.png'
+import orders_img from '../../../../public/assets/images/orders.png'
+import person_img from '../../../../public/assets/images/person.png'
+import sales_img from '../../../../public/assets/images/sales.png'
+import sold_img from '../../../../public/assets/images/sold.png'
 import SalesChart from '../../Layout/SalesChart'
 
-function Dashboard() {
+function Dashboard({ sales, orders, sold, customers }) {
+    console.log(sales);
+    console.log(orders);
+    console.log(sold);
+    console.log(customers);
 
     const dummyData = [
         { product: { product_name: "Product A" }, total_sales: 120 },
@@ -30,13 +34,13 @@ function Dashboard() {
                         <div className="card shadow rounded w-100">
                             <div className="card-body">
                                 <img
-                                    src={sales}
+                                    src={sales_img}
                                     alt="image"
                                     className="object-fit-cover mb-3"
                                     style={{ width: '50px', height: '50px' }}
                                 />
 
-                                <h5>₱500</h5>
+                                <h5>₱{sales}</h5>
                                 <p>Total Sales</p>
                             </div>
                         </div>
@@ -44,13 +48,13 @@ function Dashboard() {
                         <div className="card shadow rounded w-100">
                             <div className="card-body">
                                 <img
-                                    src={orders}
+                                    src={orders_img}
                                     alt="image"
                                     className="object-fit-cover mb-3"
                                     style={{ width: '50px', height: '50px' }}
                                 />
 
-                                <h5>100</h5>
+                                <h5>{orders}</h5>
                                 <p>Total Order</p>
                             </div>
                         </div>
@@ -58,13 +62,13 @@ function Dashboard() {
                         <div className="card shadow rounded w-100">
                             <div className="card-body">
                                 <img
-                                    src={sold}
+                                    src={sold_img}
                                     alt="image"
                                     className="object-fit-cover mb-3"
                                     style={{ width: '50px', height: '50px' }}
                                 />
 
-                                <h5>100</h5>
+                                <h5>{sold}</h5>
                                 <p>Total Sold</p>
                             </div>
                         </div>
@@ -72,13 +76,13 @@ function Dashboard() {
                         <div className="card shadow rounded w-100">
                             <div className="card-body">
                                 <img
-                                    src={person}
+                                    src={person_img}
                                     alt="image"
                                     className="object-fit-cover mb-3"
                                     style={{ width: '50px', height: '50px' }}
                                 />
 
-                                <h5>50</h5>
+                                <h5>{customers}</h5>
                                 <p>New Customers</p>
                             </div>
                         </div>
