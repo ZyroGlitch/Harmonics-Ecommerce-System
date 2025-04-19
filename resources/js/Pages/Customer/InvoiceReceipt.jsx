@@ -161,9 +161,6 @@ function InvoiceReceipt({ order, orderDetails }) {
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div >
     );

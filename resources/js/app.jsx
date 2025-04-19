@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import CustomerLayout from './Layout/CustomerLayout';
 
+import 'react-calendar/dist/Calendar.css';
+
 createInertiaApp({
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.jsx', { eager: true })

@@ -3,6 +3,7 @@ import CustomerLayout from '../../Layout/CustomerLayout'
 import { Link } from '@inertiajs/react';
 import { useRoute } from '../../../../vendor/tightenco/ziggy';
 import { IoReceipt } from "react-icons/io5";
+import { FaCommentDots } from "react-icons/fa6";
 
 function Orders({ orders, order_id }) {
     console.log(orders);
@@ -16,16 +17,15 @@ function Orders({ orders, order_id }) {
             <div className="card shadow rounded-lg border-0">
                 <div className="card-body">
                     <table class="table">
-                        <thead className='table-light'>
+                        <thead>
                             <tr className='text-center'>
                                 <th className='text-start'>Order ID</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Cash Received</th>
-                                <th>Change</th>
                                 <th>Status</th>
                                 <th>Ordered Date</th>
                                 <th>Invoice</th>
+                                <th>Feedback</th>
                             </tr>
                         </thead>
                         <tbody className='text-center'>
@@ -48,16 +48,6 @@ function Orders({ orders, order_id }) {
                                             <td>{order.quantity}</td>
                                             <td>₱{order.total}</td>
                                             <td
-                                                className={`${order.cash_recieved ? '' : 'text-warning'}`}
-                                            >
-                                                {order.cash_recieved ? '₱'.order.cash_recieved : 'Payment Review'}
-                                            </td>
-                                            <td
-                                                className={`${order.change ? '' : 'text-warning'}`}
-                                            >
-                                                {order.change ? '₱'.order.change : 'Payment Review'}
-                                            </td>
-                                            <td
                                                 className={`
                                                     ${order.order_status === 'Pending' ? 'text-warning' : ''}
 
@@ -65,7 +55,9 @@ function Orders({ orders, order_id }) {
 
                                                     ${order.order_status === 'Shipped' ? 'text-primary' : ''}
 
-                                                    ${order.order_status === 'Delivered' ? 'text-success' : ''}
+                                                    ${order.order_status === 'Delivered' ? 'text-info' : ''}
+
+                                                    ${order.order_status === 'Completed' ? 'text-success' : ''}
                                                     `}
                                             >
                                                 {order.order_status}
@@ -79,6 +71,20 @@ function Orders({ orders, order_id }) {
                                                     <IoReceipt />
                                                 </Link>
                                             </td>
+                                            {
+                                                order.order_status === 'Completed' ? (
+                                                    <td>
+                                                        <Link
+                                                            href={route('customer.invoice', { order_id: order_id[index].order_id })}
+                                                            className='fs-5 text-dark'
+                                                        >
+                                                            <FaCommentDots />
+                                                        </Link>
+                                                    </td>
+                                                ) : (
+                                                    ''
+                                                )
+                                            }
                                         </tr>
                                     );
                                 })
@@ -103,7 +109,7 @@ function Orders({ orders, order_id }) {
                                 link.url ?
                                     <Link
                                         key={link.label}
-                                        // href={link.url}
+                                        href={link.url}
                                         dangerouslySetInnerHTML={{ __html: link.label }}
                                         className={`btn btn-sm me-3 ${link.active ? 'btn-success' : 'btn-outline-success'}`}
                                         style={{ textDecoration: 'none' }}

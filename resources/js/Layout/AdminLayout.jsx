@@ -2,14 +2,13 @@ import React from 'react'
 import logo from '../../../public/assets/images/logo.png'
 import profile from '../../../public/assets/images/profile.png'
 import { Link, usePage } from '@inertiajs/react'
-import { BsFillGridFill, BsBagFill, BsCartFill, BsClipboard2CheckFill } from "react-icons/bs";
+import { BsFillGridFill, BsBagFill } from "react-icons/bs";
 import { IoExit, IoPeople } from "react-icons/io5";
 import {
     FaBars, FaUserLarge, FaCubes, FaCoins,
-    FaBell, FaEnvelope, FaChartPie, FaCartShopping
+    FaBell, FaEnvelope, FaChartPie
 } from "react-icons/fa6";
 import { useRoute } from '../../../vendor/tightenco/ziggy'
-
 import MetaTagsLayout from './MetaTagsLayout';
 
 
@@ -37,10 +36,10 @@ export default function AdminLayout({ children }) {
 
                     <nav className="d-flex flex-column gap-1">
                         <Link
-                            href={route('admin.dashboard')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.dashboard') ? 'active' : ''}`}
+                            href={route('admin.salesReport')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.salesReport') ? 'active' : ''}`}
                         >
-                            <BsFillGridFill /> Dashboard
+                            <FaChartPie /> Sales Report
                         </Link>
 
 
@@ -59,13 +58,6 @@ export default function AdminLayout({ children }) {
                         </Link>
 
                         <Link
-                            href={route('admin.salesReport')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.salesReport') ? 'active' : ''}`}
-                        >
-                            <FaChartPie /> Sales Report
-                        </Link>
-
-                        <Link
                             href={route('admin.employee')}
                             className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.employee') ? 'active' : ''}`}
                         >
@@ -73,10 +65,17 @@ export default function AdminLayout({ children }) {
                         </Link>
 
                         <Link
-                            href={route('admin.messages')}
-                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.messages') ? 'active' : ''}`}
+                            href={route('admin.customer')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.customer') ? 'active' : ''}`}
                         >
-                            <FaEnvelope /> Messages
+                            <IoPeople /> Customer
+                        </Link>
+
+                        <Link
+                            href={route('admin.profile')}
+                            className={`d-flex align-items-center gap-2 rounded p-2 sidebar-item ${route().current('admin.profile') ? 'active' : ''}`}
+                        >
+                            <FaUserLarge /> Profile
                         </Link>
                     </nav>
 
@@ -96,7 +95,11 @@ export default function AdminLayout({ children }) {
                         <div className="d-flex align-items-center gap-3">
                             <button className="btn btn-light humburger-hidden" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"><FaBars /></button>
 
-                            <img src={auth.user ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
+                            <img
+                                src={auth.user.profile ? `/storage/${auth.user.profile}` : profile} alt="profile"
+                                className="object-fit-cover rounded-circle border border-2 border-light shadow-lg"
+                                style={{ width: '45px', height: '45px' }} />
+
                             <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5>
                         </div>
 

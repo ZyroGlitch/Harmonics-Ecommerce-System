@@ -76,7 +76,7 @@ class AuthController
                 
             }else if($user->role === 'Admin'){
                  // Redirect to admin dashboard
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.salesReport');
             }
 
         }else{

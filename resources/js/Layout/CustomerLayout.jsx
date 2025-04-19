@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import logo from '../../../public/assets/images/logo.png'
 import profile from '../../../public/assets/images/profile.png'
 import { Link, usePage } from '@inertiajs/react'
@@ -9,10 +9,9 @@ import { useRoute } from '../../../vendor/tightenco/ziggy'
 import MetaTagsLayout from './MetaTagsLayout';
 import product from '../../../public/assets/products/gym1.png'
 
-
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import { Modal } from 'bootstrap';
 
 export default function CustomerLayout({ children }) {
     const route = useRoute();
@@ -20,12 +19,28 @@ export default function CustomerLayout({ children }) {
     // Get the authenticated user credentials
     const { auth } = usePage().props
 
+    const { props } = usePage();
+
     useEffect(() => {
         AOS.init({
             duration: 1000, // Animation duration in milliseconds
             once: true, // Whether animation should happen only once
         });
     }, []);
+
+    // useEffect(() => {
+    //     if (props.showFeedbackModal) {
+    //         const feedbackModal = new Modal(document.getElementById('feedbackModal'));
+    //         feedbackModal.show();
+
+    //         // Optional: prevent modal from closing when clicking outside
+    //         document.getElementById('feedbackModal').addEventListener('hide.bs.modal', function (event) {
+    //             // You might want to prevent closing or mark feedback as given here
+    //         });
+    //     }
+    // }, [props.showFeedbackModal]);
+
+
 
     return (
         <>
@@ -88,7 +103,7 @@ export default function CustomerLayout({ children }) {
                         <div className="d-flex align-items-center gap-3">
                             <button className="btn btn-light humburger-hidden" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"><FaBars /></button>
 
-                            <img src={auth.user ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
+                            <img src={auth.user.profile ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
                             <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5>
                         </div>
 
@@ -119,7 +134,7 @@ export default function CustomerLayout({ children }) {
             </div>
 
             {/* Notification Offcanvas  */}
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="notifications" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas offcanvas-end" id="notifications" aria-labelledby="offcanvasRightLabel">
                 <div className="offcanvas-header border border-bottom">
                     <div className="d-flex flex-column gap-1">
                         <h4 className='text-success'>
@@ -179,6 +194,26 @@ export default function CustomerLayout({ children }) {
                         <div className="d-flex flex-column gap-1">
                             <h6 className='text-success'>Order Confirmed</h6>
                             <p className='text-muted'>10 mins ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Feedback Modal trigger after the order status become processing */}
+            <div className="modal fade" id="feedbackModal">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">We'd love your feedback!</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Please tell us about your order experience.</p>
+                            {/* Add form or textarea here */}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Submit Feedback</button>
                         </div>
                     </div>
                 </div>

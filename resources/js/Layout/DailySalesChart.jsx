@@ -11,17 +11,17 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
-export default function SalesChart({ topSellingProducts }) {
-    if (!topSellingProducts || topSellingProducts.length === 0) {
+export default function DailySalesChart({ dailySales }) {
+    if (!dailySales || dailySales.length === 0) {
         return <p>Loading chart...</p>;
     }
 
     const data = {
-        labels: topSellingProducts.map((item) => item.product.product_name),
+        labels: dailySales.map((sale) => sale.product.product_name),
         datasets: [
             {
-                label: "Units Sold",
-                data: topSellingProducts.map((item) => Number(item.total_quantity)),
+                label: "Sales Amount",
+                data: dailySales.map((sale) => Number(sale.total_sales)),
                 backgroundColor: "rgba(34, 197, 94, 0.8)", // Fresh green (Tailwind Green-500)
                 borderColor: "rgba(34, 197, 94, 1)", // Darker green border
                 borderWidth: 1,
@@ -38,7 +38,7 @@ export default function SalesChart({ topSellingProducts }) {
             datalabels: { display: false }, // 👈 this disables data labels inside bars
         },
         scales: {
-            x: { beginAtZero: true, title: { display: true, text: "Number of Sales" } },
+            x: { beginAtZero: true, title: { display: true, text: "Sales Amount (₱)" } },
             y: { title: { display: true, text: "Product Names" } },
         },
     };

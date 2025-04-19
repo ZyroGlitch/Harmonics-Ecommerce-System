@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OrderController;
 use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::post('/dashboard/direct/buy/order',[OrderController::class,'directProductOrder'])
         ->name('directProductOrder');
+
+        Route::post('/dashboard/buy/product/feedback',[FeedbackController::class,'feedback'])
+        ->name('feedback');
         
         
         // --------------------------------------------------------------------------------------
