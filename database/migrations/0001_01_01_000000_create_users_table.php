@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('firstname',length:100);
             $table->string('lastname',length:100);
-            $table->string('phone',length:11)->unique();
-            $table->string('address');
+            $table->string('phone',length:11)->unique()->nullable();
+            $table->string('address')->nullable();
             $table->string('role',length:30)->default('Customer');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('google_id')->nullable();
             $table->string('profile')->nullable();
             $table->rememberToken();
             $table->timestamps();

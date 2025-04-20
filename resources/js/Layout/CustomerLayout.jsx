@@ -103,7 +103,18 @@ export default function CustomerLayout({ children }) {
                         <div className="d-flex align-items-center gap-3">
                             <button className="btn btn-light humburger-hidden" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"><FaBars /></button>
 
-                            <img src={auth.user.profile ? `/storage/${auth.user.profile}` : profile} alt="profile" className="object-fit-cover rounded-circle border border-2 border-light shadow-lg" style={{ width: '45px', height: '45px' }} />
+                            <img
+                                src={
+                                    auth.user.profile
+                                        ? auth.user.profile.startsWith('http')
+                                            ? auth.user.profile
+                                            : `/storage/${auth.user.profile}`
+                                        : profile
+                                }
+                                alt="profile"
+                                className="object-fit-cover rounded-circle border border-2 border-light shadow-lg"
+                                style={{ width: '45px', height: '45px' }}
+                            />
                             <h5 className="text-light"><span className="text-warning">Hi!</span> {auth.user ? `${auth.user.firstname} ${auth.user.lastname}` : 'Guest'}</h5>
                         </div>
 

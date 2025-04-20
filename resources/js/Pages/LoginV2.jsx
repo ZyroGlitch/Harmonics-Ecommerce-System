@@ -4,7 +4,7 @@ import logo from '../../../public/assets/images/logo.png';
 import google from '../../../public/assets/images/google.png';
 import facebook from '../../../public/assets/images/facebook.png';
 import { useRoute } from '../../../vendor/tightenco/ziggy/src/js';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Link, router, useForm, usePage } from '@inertiajs/react';
 
 export default function LoginV2() {
     const route = useRoute();
@@ -20,6 +20,11 @@ export default function LoginV2() {
                 reset();
             }
         });
+    }
+
+    const googleLogin = (e) => {
+        e.preventDefault();
+        window.location.href = route('guest.google_login');
     }
 
     const { flash } = usePage().props
@@ -106,8 +111,8 @@ export default function LoginV2() {
                     <hr className='m-0 mb-3' />
 
                     <div className="d-flex justify-content-center mb-2">
-                        <Link
-                            href={route('guest.google_login')}
+                        <button
+                            onClick={googleLogin}
                             className="btn btn-light btn-sm rounded-pill d-flex justify-content-center align-items-center gap-2 p-2"
                             style={{ width: '50%' }}
                         >
@@ -115,7 +120,7 @@ export default function LoginV2() {
                                 <img src={google} alt="google" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
                             </div>
                             <p>Continue with Google</p>
-                        </Link>
+                        </button>
                     </div>
 
                     <div className="d-flex justify-content-center mb-4">
