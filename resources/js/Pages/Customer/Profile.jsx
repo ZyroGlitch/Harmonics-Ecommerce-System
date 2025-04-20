@@ -169,8 +169,10 @@ function Profile({ customer }) {
                             style={{ width: '150px', height: '150px' }}
                         />
                         <div className="d-flex flex-column mt-5">
-                            <h3 className='text-success'>John Ford Buliag</h3>
-                            <p className="text-muted">Customer</p>
+                            <h3 className='text-success'>
+                                {auth.user.firstname + ' ' + auth.user.lastname}
+                            </h3>
+                            <p className="text-muted">{auth.user.role}</p>
                         </div>
                     </div>
 

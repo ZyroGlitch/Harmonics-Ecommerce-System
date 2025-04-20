@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -15,11 +16,11 @@ use Illuminate\Support\Facades\Route;
         })->name('index');
 
         Route::get('/login',function(){
-            return inertia('Login');
+            return inertia('LoginV2');
         })->name('login');
 
         Route::get('/register',function(){
-            return inertia('Register');
+            return inertia('RegisterV2');
         })->name('register');
 
         Route::post('/create/account',[AuthController::class,'create_account'])
@@ -27,6 +28,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::post('/authentication',[AuthController::class,'authentication'])
         ->name('authentication');
+
+        Route::get('/google/login',[SocialiteController::class,'googleLogin'])
+        ->name('google_login');
+
+        Route::get('/auth/google',[SocialiteController::class,'googleAuth'])
+        ->name('google_auth');
     });
 
     Route::middleware(['auth', CustomerMiddleware::class])

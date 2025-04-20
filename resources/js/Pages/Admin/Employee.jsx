@@ -29,7 +29,7 @@ function Employee({ employees }) {
                                 <div className="card shadow rounded border-0">
                                     <div className="card-header bg-light d-flex justify-content-between align-items-start p-3">
                                         <div>
-                                            <img src={`/storage/${employee.profile}`} alt="profile" className="object-fit-contain rounded-circle border border-info border-3 mb-3 shadow" style={{ width: '80px', height: '80px' }} />
+                                            <img src={`/storage/${employee.profile}`} alt="profile" className="object-fit-cover rounded-circle border border-info border-3 mb-3 shadow" style={{ width: '80px', height: '80px' }} />
 
                                             <h6>{employee.firstname} {employee.lastname}</h6>
 

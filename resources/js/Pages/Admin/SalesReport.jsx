@@ -203,13 +203,9 @@ function SalesReport({ sales, salesID, totalSales, totalOrders,
                                                 <td>{sale.payment_method}</td>
                                                 <td className='text-success'>{sale.order_status}</td>
                                                 <td>{formattedDate}</td>
-                                                <td className='d-flex align-items-center gap-2'>
-                                                    <Link className="btn btn-primary btn-sm w-100">
+                                                <td>
+                                                    <Link className="btn btn-primary btn-sm">
                                                         <FaEye />
-                                                    </Link>
-
-                                                    <Link className="btn btn-warning btn-sm w-100">
-                                                        <FaPencil />
                                                     </Link>
                                                 </td>
                                             </tr>
