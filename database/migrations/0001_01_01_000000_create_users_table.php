@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('google_id')->nullable();
+            $table->string('facebook_id')->nullable();
             $table->string('profile')->nullable();
             $table->rememberToken();
             $table->timestamps();

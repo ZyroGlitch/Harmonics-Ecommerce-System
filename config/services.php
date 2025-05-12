@@ -41,4 +41,15 @@ return [
         'redirect' => 'http://127.0.0.1:8000/auth/google',
     ],
 
+    'facebook' => [
+        'client_id' => '2411607179210390',
+        'client_secret' => 'eb315d4128120712396f0d7d403dd1aa',
+        'redirect' => 'http://localhost:8000/auth/facebook',
+        'fields' => [
+            'first_name',
+            'last_name',
+            'email',
+        ],
+    ],
+
 ];

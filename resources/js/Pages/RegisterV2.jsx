@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import background from '../../../public/assets/images/auth_background.jpg';
 import google from '../../../public/assets/images/google.png';
 import facebook from '../../../public/assets/images/facebook.png';
 import { useRoute } from '../../../vendor/tightenco/ziggy/src/js';
 import { Link, useForm, usePage } from '@inertiajs/react';
+import Swal from 'sweetalert2';
 
 export default function RegisterV2() {
-    const { flash } = usePage().props
+    const { flash } = usePage().props;
     const [showPassword, setShowPassword] = useState(false);
     const route = useRoute();
 
@@ -28,10 +29,28 @@ export default function RegisterV2() {
         });
     }
 
+    useEffect(() => {
+        if (flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: flash.success,
+                confirmButtonColor: '#28a745'
+            });
+        } else if (flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash.error,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }, [flash]);
+
     return (
-        <div className="row justify-content-center bg-light">
+        <div className="row justify-content-center bg-light min-vh-100 d-flex">
             <div
-                className="col-md-6 vh-100 position-relative"
+                className="col-md-6 min-vh-100 position-relative"
                 style={{
                     backgroundImage: `url(${background})`,
                     backgroundSize: 'cover',
@@ -42,8 +61,7 @@ export default function RegisterV2() {
                 <div
                     className="position-absolute top-0 start-0 w-100 h-100"
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
-                >
-                </div>
+                ></div>
                 <div className="d-flex justify-content-center align-items-center h-100 position-relative text-light px-5">
                     <div>
                         <h1>Welcome to Harmonics!</h1>
@@ -67,7 +85,7 @@ export default function RegisterV2() {
                                 <div className="text-center">
                                     <img src={google} alt="google" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
                                 </div>
-                                <p>Continue with Google</p>
+                                <p>Sign up with Google</p>
                             </Link>
                         </div>
 
@@ -76,7 +94,7 @@ export default function RegisterV2() {
                                 <div className="text-center">
                                     <img src={facebook} alt="facebook" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
                                 </div>
-                                <p>Continue with Facebook</p>
+                                <p>Sign up with Facebook</p>
                             </button>
                         </div>
                     </div>
@@ -93,14 +111,9 @@ export default function RegisterV2() {
                                 value={data.firstname}
                                 onChange={e => setData('firstname', e.target.value)}
                             />
-
-                            {
-                                errors.firstname && (
-                                    <p className='text-danger mt-2'>
-                                        {errors.firstname}
-                                    </p>
-                                )
-                            }
+                            {errors.firstname && (
+                                <p className='text-danger mt-2'>{errors.firstname}</p>
+                            )}
                         </div>
 
                         <div className='w-100'>
@@ -112,14 +125,9 @@ export default function RegisterV2() {
                                 value={data.lastname}
                                 onChange={e => setData('lastname', e.target.value)}
                             />
-
-                            {
-                                errors.lastname && (
-                                    <p className='text-danger mt-2'>
-                                        {errors.lastname}
-                                    </p>
-                                )
-                            }
+                            {errors.lastname && (
+                                <p className='text-danger mt-2'>{errors.lastname}</p>
+                            )}
                         </div>
                     </div>
 
@@ -133,14 +141,9 @@ export default function RegisterV2() {
                                 value={data.phone}
                                 onChange={e => setData('phone', e.target.value)}
                             />
-
-                            {
-                                errors.phone && (
-                                    <p className='text-danger mt-2'>
-                                        {errors.phone}
-                                    </p>
-                                )
-                            }
+                            {errors.phone && (
+                                <p className='text-danger mt-2'>{errors.phone}</p>
+                            )}
                         </div>
 
                         <div className="w-100">
@@ -152,14 +155,9 @@ export default function RegisterV2() {
                                 value={data.address}
                                 onChange={e => setData('address', e.target.value)}
                             />
-
-                            {
-                                errors.address && (
-                                    <p className='text-danger mt-2'>
-                                        {errors.address}
-                                    </p>
-                                )
-                            }
+                            {errors.address && (
+                                <p className='text-danger mt-2'>{errors.address}</p>
+                            )}
                         </div>
                     </div>
 
@@ -172,26 +170,25 @@ export default function RegisterV2() {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                         />
-                        {
-                            errors.email &&
-                            <p className='text-danger mt-2'>
-                                {errors.email}
-                            </p>
-                        }
+                        {errors.email && (
+                            <p className='text-danger mt-2'>{errors.email}</p>
+                        )}
                     </div>
 
                     <div className="mb-2">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type={showPassword ? 'text' : 'password'} className="form-control rounded-pill shadow-sm" id="password" value={data.password} onChange={(e) => setData('password', e.target.value)} />
-                        {
-                            errors.password && (
-                                <p
-                                    className='text-danger mt-2'
-                                    style={{ maxWidth: '380px', wordWrap: 'break-word' }}>
-                                    {errors.password}
-                                </p>
-                            )
-                        }
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            className="form-control rounded-pill shadow-sm"
+                            id="password"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                        />
+                        {errors.password && (
+                            <p className='text-danger mt-2' style={{ maxWidth: '380px', wordWrap: 'break-word' }}>
+                                {errors.password}
+                            </p>
+                        )}
                     </div>
 
                     <div className="form-check mb-2">
@@ -199,11 +196,9 @@ export default function RegisterV2() {
                         <label className="form-check-label" htmlFor="flexCheckDefault">Show password</label>
                     </div>
 
-                    <p className='d-flex align-items-center gap-1 mb-2'>By creating an account, you agreeing to our
-                        <a
-                            className="text-success"
-                            style={{ textDecoration: 'none', cursor: 'pointer' }}
-                        >
+                    <p className='d-flex align-items-center gap-1 mb-2'>
+                        By creating an account, you agreeing to our
+                        <a className="text-success" style={{ textDecoration: 'none', cursor: 'pointer' }}>
                             Term and Conditions.
                         </a>
                     </p>
@@ -211,7 +206,8 @@ export default function RegisterV2() {
                     <input
                         type="submit"
                         className="btn btn-success rounded-pill shadow w-100 mb-3"
-                        disabled={processing} value="Sign Up"
+                        disabled={processing}
+                        value="Sign Up"
                     />
 
                     <div className="text-center">
@@ -224,9 +220,9 @@ export default function RegisterV2() {
                             <span className="text-success"> Sign In</span>
                         </Link>
                     </div>
-                </form >
-            </div >
-        </div >
+                </form>
+            </div>
+        </div>
     );
 }
 

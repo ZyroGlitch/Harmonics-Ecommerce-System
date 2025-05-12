@@ -34,6 +34,12 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/auth/google',[SocialiteController::class,'googleAuth'])
         ->name('google_auth');
+
+        Route::get('/facebook/login',[SocialiteController::class,'facebookLogin'])
+        ->name('facebookLogin');
+
+        Route::get('/auth/facebook',[SocialiteController::class,'facebookAuth'])
+        ->name('facebookAuth');
     });
 
     Route::middleware(['auth', CustomerMiddleware::class])
@@ -125,4 +131,5 @@ use Illuminate\Support\Facades\Route;
         ->name('logout');
     });
 
+require __DIR__.'/manager.php';
 require __DIR__.'/admin.php';

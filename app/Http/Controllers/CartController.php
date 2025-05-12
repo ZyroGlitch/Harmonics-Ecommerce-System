@@ -111,7 +111,7 @@ class CartController
     }
 
     public function checkout(Request $request){
-        // dd($request);
+        dd($request);
         $fields = $request->validate([
             'cart_id' => 'required|array',
             'total' => 'required|numeric',

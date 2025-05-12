@@ -1,5 +1,5 @@
+import ManagerLayout from '../../Layout/ManagerLayout'
 import React, { useEffect } from 'react'
-import AdminLayout from '../../Layout/AdminLayout'
 import product from '../../../../public/assets/products/music2.png'
 import { Link, useForm } from '@inertiajs/react'
 import { BsBagFill } from "react-icons/bs";
@@ -20,19 +20,19 @@ function Product({ products }) {
     });
 
 
-    useEffect(() => {
-        const timeoutID = setTimeout(() => {
-            get(route('admin.product'), {
-                preserveState: true,
-                searchByName: data.searchByName,
-                sortByPrice: data.sortByPrice,
-                sortByStatus: data.sortByStatus,
-                page: data.currentPage,
-            });
-        }, 300);
+    // useEffect(() => {
+    //     const timeoutID = setTimeout(() => {
+    //         get(route('admin.product'), {
+    //             preserveState: true,
+    //             searchByName: data.searchByName,
+    //             sortByPrice: data.sortByPrice,
+    //             sortByStatus: data.sortByStatus,
+    //             page: data.currentPage,
+    //         });
+    //     }, 300);
 
-        return () => clearTimeout(timeoutID);
-    }, [data]);
+    //     return () => clearTimeout(timeoutID);
+    // }, [data]);
 
     return (
         <div className='py-3'>
@@ -131,7 +131,7 @@ function Product({ products }) {
                     )
                 }
 
-                <div className="d-flex justify-content-between align-items-center bg-light p-3">
+                {/* <div className="d-flex justify-content-between align-items-center bg-light p-3">
                     <p className='fw-semibold'>{products.to} out of {products.total} Products</p>
 
                     <div>
@@ -162,11 +162,11 @@ function Product({ products }) {
                             ))
                         }
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
 }
 
-Product.layout = page => <AdminLayout children={page} />
+Product.layout = page => <ManagerLayout children={page} />
 export default Product

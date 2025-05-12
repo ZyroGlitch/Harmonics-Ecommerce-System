@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import background from '../../../public/assets/images/auth_background.jpg';
 import logo from '../../../public/assets/images/logo.png';
 import google from '../../../public/assets/images/google.png';
 import facebook from '../../../public/assets/images/facebook.png';
 import { useRoute } from '../../../vendor/tightenco/ziggy/src/js';
-import { Link, router, useForm, usePage } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
+import Swal from 'sweetalert2';
 
 export default function LoginV2() {
     const route = useRoute();
@@ -27,13 +28,37 @@ export default function LoginV2() {
         window.location.href = route('guest.google_login');
     }
 
+    const facebookLogin = (e) => {
+        e.preventDefault();
+        window.location.href = route('guest.facebookLogin');
+    }
+
     const { flash } = usePage().props
     const [showPassword, setShowPassword] = useState(false);
 
+    useEffect(() => {
+        if (flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: flash.success,
+                confirmButtonColor: '#28a745'
+            });
+        } else if (flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash.error,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }, [flash]);
+
+
     return (
-        <div className="row justify-content-center bg-light">
+        <div className="row justify-content-center bg-light  min-vh-100">
             <div
-                className="col-md-7 vh-100 position-relative"
+                className="col-md-7  min-vh-100 position-relative"
                 style={{
                     backgroundImage: `url(${background})`,
                     backgroundSize: 'cover',
@@ -108,29 +133,34 @@ export default function LoginV2() {
                     />
 
                     <p className='text-center'>or continue with</p>
-                    <hr className='m-0 mb-3' />
+                    <hr className='m-0 mb-4' />
 
-                    <div className="d-flex justify-content-center mb-2">
-                        <button
-                            onClick={googleLogin}
-                            className="btn btn-light btn-sm rounded-pill d-flex justify-content-center align-items-center gap-2 p-2"
-                            style={{ width: '50%' }}
-                        >
-                            <div className="text-center">
-                                <img src={google} alt="google" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
-                            </div>
-                            <p>Continue with Google</p>
-                        </button>
+                    <div className="d-flex justify-content-evenly align-items-center mb-4">
+                        <div className="d-flex justify-content-center">
+                            <button
+                                onClick={googleLogin}
+                                className="btn btn-light btn-sm rounded-pill d-flex justify-content-center align-items-center gap-2 p-2"
+                            >
+                                <div className="text-center">
+                                    <img src={google} alt="google" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
+                                </div>
+                                <p>Continue with Google</p>
+                            </button>
+                        </div>
+
+                        <div className="d-flex justify-content-center">
+                            <button
+                                onClick={facebookLogin}
+                                className="btn btn-primary btn-sm rounded-pill d-flex justify-content-center align-items-center gap-2 p-2"
+                            >
+                                <div className="text-center">
+                                    <img src={facebook} alt="facebook" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
+                                </div>
+                                <p>Continue with Facebook</p>
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="d-flex justify-content-center mb-4">
-                        <button className="btn btn-primary btn-sm rounded-pill d-flex justify-content-center align-items-center gap-2 p-2" style={{ width: '50%' }}>
-                            <div className="text-center">
-                                <img src={facebook} alt="facebook" className="object-fit-cover rounded-circle shadow-sm" style={{ width: '18px', height: '18px' }} />
-                            </div>
-                            <p>Continue with Facebook</p>
-                        </button>
-                    </div>
 
                     <div className="text-center">
                         <Link
