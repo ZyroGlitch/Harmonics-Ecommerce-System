@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WalkInOrder extends Model
 {
     protected $fillable = [
+        'user_id',
         'product_id',
         'quantity',
         'subtotal'
@@ -14,5 +15,9 @@ class WalkInOrder extends Model
 
     public function product(){
         return $this->belongsTo((Product::class));
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

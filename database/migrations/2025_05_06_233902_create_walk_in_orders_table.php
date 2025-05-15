@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('walk_in_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->integer('quantity');
             $table->decimal('subtotal', 10, 2);

@@ -136,6 +136,11 @@ label {
     .humburger-hidden {
         display: block !important;
     }
+
+    /* Responsive Layout */
+    h3 {
+        font-size: 16px !important;
+    }
 }
 
 /* Tablet Screen Size */
@@ -152,6 +157,11 @@ label {
 
     .humburger-hidden {
         display: block !important;
+    }
+
+    /* Responsive Layout */
+    h3 {
+        font-size: 20px !important;
     }
 }
 

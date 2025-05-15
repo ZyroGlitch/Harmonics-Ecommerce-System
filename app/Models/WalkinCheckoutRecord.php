@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WalkinCheckoutRecord extends Model
 {
     protected $fillable = [
+        'user_id',
         'customer_name',
         'quantity',
         'total',
@@ -15,4 +16,8 @@ class WalkinCheckoutRecord extends Model
         'payment_method',
         'order_status',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

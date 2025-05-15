@@ -11,13 +11,11 @@ import { FaStore, FaPhone, FaLocationDot } from "react-icons/fa6";
 import music1 from '../../../public/assets/products/music1.png';
 import sport1 from '../../../public/assets/products/sport1.png';
 import gym1 from '../../../public/assets/products/gym1.png';
-
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRoute } from '../../../vendor/tightenco/ziggy';
 
 export default function Index() {
-
     const route = useRoute();
 
     const dummyData = [
@@ -30,6 +28,15 @@ export default function Index() {
     ];
 
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -44,10 +51,9 @@ export default function Index() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-
     useEffect(() => {
         AOS.init({
-            duration: 1000, // Animation duration in milliseconds
+            duration: 1000,
         });
     }, []);
 
@@ -63,23 +69,26 @@ export default function Index() {
                         Harmonics
                     </Link>
 
-                    {/* Responsive Hamburger Menu */}
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        onClick={toggleMenu}
+                        aria-label="Toggle navigation"
+                    >
                         <span className="navbar-toggler-icon"></span>
                     </button>
 
-                    <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-5">
-                            <li className="nav-item">
+                    <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNavDropdown">
+                        <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-5 gap-3">
+                            <li className="nav-item" onClick={closeMenu}>
                                 <a
-                                    className={`nav-link active ${isScrolled ? 'text-dark' : 'text-light'}`}
-                                    aria-current="page"
+                                    className={`nav-link ${isScrolled ? 'text-dark' : 'text-light'}`}
                                     href="#home"
                                 >
                                     Home
                                 </a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item" onClick={closeMenu}>
                                 <a
                                     className={`nav-link ${isScrolled ? 'text-dark' : 'text-light'}`}
                                     href="#products"
@@ -87,7 +96,7 @@ export default function Index() {
                                     Products
                                 </a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item" onClick={closeMenu}>
                                 <a
                                     className={`nav-link ${isScrolled ? 'text-dark' : 'text-light'}`}
                                     href="#about"
@@ -95,7 +104,7 @@ export default function Index() {
                                     About
                                 </a>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item" onClick={closeMenu}>
                                 <a
                                     className={`nav-link ${isScrolled ? 'text-dark' : 'text-light'}`}
                                     href="#contact"
@@ -108,6 +117,7 @@ export default function Index() {
                         <Link
                             href={route('guest.register')}
                             className={`btn login-btn ${isScrolled ? 'btn-outline-success' : 'btn-outline-light'}`}
+                            onClick={closeMenu}
                         >
                             Create Account
                         </Link>
@@ -115,7 +125,6 @@ export default function Index() {
                 </div>
             </nav>
 
-            {/* Bootstrap Carousel with Auto-Slide & Infinite Loop */}
             <section
                 id="carouselExampleAutoslide"
                 className="carousel slide"
@@ -135,27 +144,22 @@ export default function Index() {
                                 backgroundRepeat: 'no-repeat',
                             }}
                         >
-                            {/* Darker Overlay */}
                             <div
                                 className="position-absolute top-0 start-0 w-100 h-100"
                                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', zIndex: 1 }}>
                             </div>
 
-                            {/* Content Wrapper */}
                             <div
                                 className="d-flex flex-column align-items-center gap-4 position-relative"
                                 style={{ zIndex: 2, width: '850px' }}>
-                                {/* Text with Better Readability */}
                                 <h3
                                     className="text-light fw-bold px-3 py-2 rounded"
                                     style={{
-
-                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)', // Adds contrast
+                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)',
                                     }}>
                                     Feel the rhythm and express yourself with top-quality instruments built for every skill level
                                 </h3>
 
-                                {/* Improved Button Styling */}
                                 <Link
                                     href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
@@ -177,27 +181,22 @@ export default function Index() {
                                 backgroundRepeat: 'no-repeat',
                             }}
                         >
-                            {/* Darker Overlay */}
                             <div
                                 className="position-absolute top-0 start-0 w-100 h-100"
                                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', zIndex: 1 }}>
                             </div>
 
-                            {/* Content Wrapper */}
                             <div
                                 className="d-flex flex-column align-items-center gap-4 position-relative"
                                 style={{ zIndex: 2, width: '850px' }}>
-                                {/* Text with Better Readability */}
                                 <h3
                                     className="text-light fw-bold px-3 py-2 rounded"
                                     style={{
-
-                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)', // Adds contrast
+                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)',
                                     }}>
                                     Stay ahead of the competition with premium sports gear designed for performance and durability.
                                 </h3>
 
-                                {/* Improved Button Styling */}
                                 <Link
                                     href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
@@ -219,27 +218,22 @@ export default function Index() {
                                 backgroundRepeat: 'no-repeat',
                             }}
                         >
-                            {/* Darker Overlay */}
                             <div
                                 className="position-absolute top-0 start-0 w-100 h-100"
                                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', zIndex: 1 }}>
                             </div>
 
-                            {/* Content Wrapper */}
                             <div
                                 className="d-flex flex-column align-items-center gap-4 position-relative"
                                 style={{ zIndex: 2, width: '850px' }}>
-                                {/* Text with Better Readability */}
                                 <h3
                                     className="text-light fw-bold px-3 py-2 rounded"
                                     style={{
-
-                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)', // Adds contrast
+                                        textShadow: '1px 1px 2px rgba(0, 0, 0, 0)',
                                     }}>
                                     Train Hard. Stay Strong. Keep Going. Get the best gym gear today and power up your fitness journey!
                                 </h3>
 
-                                {/* Improved Button Styling */}
                                 <Link
                                     href={route('guest.login')}
                                     className="btn btn-success fw-bold px-4 py-2 rounded-lg shadow-lg"
@@ -252,7 +246,6 @@ export default function Index() {
                     </div>
                 </div>
 
-                {/* Previous and Next Controls */}
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoslide" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
@@ -316,7 +309,7 @@ export default function Index() {
                         data-aos-easing="ease-in-sine"
                     />
 
-                    <d-flex className="flex-column gap-3"
+                    <div className="flex-column gap-3"
                         data-aos="fade-left"
                         data-aos-offset="200"
                         data-aos-easing="ease-in-sine"
@@ -324,7 +317,7 @@ export default function Index() {
                         <h2>About Us</h2>
 
                         <p style={{ textAlign: 'justify' }}>Founded in 1996, our business was created to bring together the worlds of sports, music, and fitness through high-quality gear. Starting as a small venture, we quickly grew by focusing on delivering durable and affordable products that meet the needs of athletes, musicians, and fitness enthusiasts. Today, we proudly offer a diverse range of sports equipment, gym equipment, and musical instruments, serving customers worldwide. Our commitment to quality and customer satisfaction continues to drive our growth and success.</p>
-                    </d-flex>
+                    </div>
                 </div>
                 <div className="d-flex gap-5 mb-5">
                     <img
@@ -337,7 +330,7 @@ export default function Index() {
                         data-aos-easing="ease-in-sine"
                     />
 
-                    <d-flex className="flex-column gap-3"
+                    <div className="flex-column gap-3"
                         data-aos="fade-left"
                         data-aos-offset="200"
                         data-aos-easing="ease-in-sine"
@@ -345,7 +338,7 @@ export default function Index() {
                         <h2>Mission</h2>
 
                         <p style={{ textAlign: 'justify' }}>Our mission is simple: to provide top-tier products and exceptional service to every customer. We believe in the harmony between music, sports, and gym equipment, offering a way to express passion, creativity, and discipline. Our goal is to be the go-to shop for individuals who want to embrace both sides of their talents.</p>
-                    </d-flex>
+                    </div>
                 </div>
                 <div className="d-flex gap-5">
                     <img
@@ -358,7 +351,7 @@ export default function Index() {
                         data-aos-easing="ease-in-sine"
                     />
 
-                    <d-flex className="flex-column gap-3"
+                    <div className="flex-column gap-3"
                         data-aos="fade-left"
                         data-aos-offset="200"
                         data-aos-easing="ease-in-sine"
@@ -366,7 +359,7 @@ export default function Index() {
                         <h2>Vision</h2>
 
                         <p style={{ textAlign: 'justify' }}>To be the leading global destination for sports, music, and fitness enthusiasts, providing high-quality sports gear, musical instruments, and gym equipment that inspire passion, creativity, and peak performance. We strive to empower individuals to embrace their talents and achieve their goals through exceptional products and outstanding service.</p>
-                    </d-flex>
+                    </div>
                 </div>
             </section>
 
@@ -397,7 +390,6 @@ export default function Index() {
                             648 Sta. Ana Ave, Poblacion District, Davao City
                         </p>
                         <a href="https://www.facebook.com/feelmore.davao" className='text-light' style={{ textDecoration: 'none' }}>
-
                             feelmore.davao
                         </a>
                     </div>

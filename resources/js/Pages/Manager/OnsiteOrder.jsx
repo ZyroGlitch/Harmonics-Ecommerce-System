@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ManagerLayout from '../../Layout/ManagerLayout';
 import { FaPenToSquare, FaRegTrashCan } from "react-icons/fa6";
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import { useRoute } from '../../../../vendor/tightenco/ziggy';
 import { Modal } from 'bootstrap';
+import Swal from 'sweetalert2';
 
 function OnsiteOrder({ products, carts, subtotal }) {
+    const { flash } = usePage().props;
 
     const modalRef = useRef(null);
     const modalInstance = useRef(null);
@@ -22,7 +24,24 @@ function OnsiteOrder({ products, carts, subtotal }) {
         if (modalRef.current) {
             modalInstance.current = new Modal(modalRef.current);
         }
-    }, []);
+
+        // This is for sweetalert js
+        if (flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: flash.success,
+                confirmButtonColor: '#28a745'
+            });
+        } else if (flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash.error,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }, [flash]);
 
     function openModal(product) {
         setSelectedProduct(product);
@@ -99,7 +118,7 @@ function OnsiteOrder({ products, carts, subtotal }) {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <form onSubmit={submit}>
-                            <div className="modal-header">
+                            <div className="modal-header bg-success text-light">
                                 <h5 className="modal-title">Enlist Product</h5>
                                 <button type="button" className="btn-close" onClick={closeModal}></button>
                             </div>
@@ -114,9 +133,9 @@ function OnsiteOrder({ products, carts, subtotal }) {
                                                 style={{ width: '200px', height: '200px' }}
                                             />
                                         </div>
-                                        <h5>{selectedProduct.product_name}</h5>
-                                        <p>₱{selectedProduct.price}</p>
-                                        <p>Stock Left: {selectedProduct.stocks}</p>
+                                        <h5 className='mb-2'>{selectedProduct.product_name}</h5>
+                                        <p className='mb-2'>₱{selectedProduct.price}</p>
+                                        <p className='mb-2'>Stock Left: {selectedProduct.stocks}</p>
 
                                         <div className="mb-3">
                                             <label htmlFor="quantity" className="form-label">Quantity</label>

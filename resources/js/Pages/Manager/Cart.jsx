@@ -1,17 +1,38 @@
-import React from 'react'
-import { Link, useForm } from '@inertiajs/react'
+import React, { useEffect } from 'react'
+import { Link, useForm, usePage } from '@inertiajs/react'
 import { FaTrash } from "react-icons/fa6";
 import { BsCartFill } from "react-icons/bs";
 import { useRoute } from '../../../../vendor/tightenco/ziggy';
 import ManagerLayout from '../../Layout/ManagerLayout';
+import Swal from 'sweetalert2';
 
 function Cart({ carts, total }) {
     console.log(carts);
     console.log(total);
 
     const route = useRoute();
+    const { flash } = usePage().props;
 
-    const { data, setData, post, processing, reset } = useForm({
+    useEffect(() => {
+        // This is for sweetalert js
+        if (flash.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: flash.success,
+                confirmButtonColor: '#28a745'
+            });
+        } else if (flash.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: flash.error,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }, [flash]);
+
+    const { data, setData, post, processing, reset, errors } = useForm({
         cart_id: carts.data.map(cart => cart.id),
         total: total,
         cash_received: '0',
@@ -67,6 +88,7 @@ function Cart({ carts, total }) {
                                                     <td>
 
                                                         <Link
+                                                            href={route('manager.removeItem', { cart_id: cart.id })}
                                                             className='btn btn-outline-danger btn-sm d-flex justify-content-center align-items-center gap-1'
                                                         >
                                                             <FaTrash /> Delete
@@ -86,7 +108,7 @@ function Cart({ carts, total }) {
                                 </table>
                             </div>
                             <div className="card-footer d-flex justify-content-between align-items-center bg-light p-3">
-                                <p>{carts.to} out of {carts.total} Products</p>
+                                <p>Showing {carts.to} out of {carts.total} products</p>
 
                                 <div>
                                     {
@@ -145,6 +167,12 @@ function Cart({ carts, total }) {
                                         value={data.cash_received}
                                         onChange={(e) => setData('cash_received', e.target.value)}
                                     />
+
+                                    {
+                                        errors.cash_received && (
+                                            <p className='text-danger mt-2'>{errors.cash_received}</p>
+                                        )
+                                    }
                                 </div>
 
                                 <div className="mb-3">
@@ -156,11 +184,17 @@ function Cart({ carts, total }) {
                                         value={data.customer_name}
                                         onChange={(e) => setData('customer_name', e.target.value)}
                                     />
+
+                                    {
+                                        errors.customer_name && (
+                                            <p className='text-danger mt-2'>{errors.customer_name}</p>
+                                        )
+                                    }
                                 </div>
 
                                 <button
                                     type='submit'
-                                    className='btn btn-primary w-100 shadow d-flex justify-content-center align-items-center gap-2'
+                                    className='btn btn-success w-100 shadow d-flex justify-content-center align-items-center gap-2'
                                     disabled={processing}
                                 ><BsCartFill /> Checkout</button>
                             </div>

@@ -3,6 +3,7 @@ import AdminLayout from '../../../Layout/AdminLayout';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Toaster, toast } from 'sonner';
 import { useRoute } from '../../../../../vendor/tightenco/ziggy';
+import ManagerLayout from '../../../Layout/ManagerLayout';
 
 function ViewProduct({ product }) {
     console.log(product);
@@ -21,7 +22,7 @@ function ViewProduct({ product }) {
     function submit(e) {
         e.preventDefault();
 
-        post(route('admin.updateProduct'), {
+        post(route('manager.updateProduct'), {
             onSuccess() {
                 reset();
             }
@@ -50,7 +51,7 @@ function ViewProduct({ product }) {
                 <nav aria-label="breadcrumb" className='mb-5'>
                     <ol class="breadcrumb fw-semibold">
                         <Link
-                            href={route('admin.product')}
+                            href={route('manager.product')}
                             className="breadcrumb-item text-muted"
                             style={{ textDecoration: 'none' }}
                         >Back</Link>
@@ -222,5 +223,5 @@ function ViewProduct({ product }) {
     )
 }
 
-ViewProduct.layout = page => <AdminLayout children={page} />
+ViewProduct.layout = page => <ManagerLayout children={page} />
 export default ViewProduct

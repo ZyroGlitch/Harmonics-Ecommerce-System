@@ -10,6 +10,11 @@ use App\Http\Controllers\SocialiteController;
 use App\Http\Middleware\CustomerMiddleware;
 use Illuminate\Support\Facades\Route;
 
+    // This function will trigger if page not found or 404 page not found
+    // Route::fallback(function(){
+    //     return redirect()->route('guest.index');
+    // });
+
     Route::middleware('guest')->name('guest.')->group(function () {
         Route::get('/', function () {
             return inertia('Index');

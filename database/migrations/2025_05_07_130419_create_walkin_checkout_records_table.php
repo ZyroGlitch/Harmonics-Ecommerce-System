@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('walkin_checkout_records', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('customer_name');
             $table->integer('quantity');
             $table->decimal('total', 10, 2);

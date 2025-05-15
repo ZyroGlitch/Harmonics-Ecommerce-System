@@ -8,68 +8,60 @@ import { FaEye } from "react-icons/fa6";
 import { useRoute } from '../../../../vendor/tightenco/ziggy';
 
 function Product({ products }) {
+
     console.log(products);
 
     const route = useRoute();
 
     const { data, setData, get } = useForm({
         searchByName: '',
-        sortByPrice: '',
         sortByStatus: '',
         currentPage: '',
     });
 
 
-    // useEffect(() => {
-    //     const timeoutID = setTimeout(() => {
-    //         get(route('admin.product'), {
-    //             preserveState: true,
-    //             searchByName: data.searchByName,
-    //             sortByPrice: data.sortByPrice,
-    //             sortByStatus: data.sortByStatus,
-    //             page: data.currentPage,
-    //         });
-    //     }, 300);
+    useEffect(() => {
+        const timeoutID = setTimeout(() => {
+            get(route('manager.product'), {
+                preserveState: true,
+                searchByName: data.searchByName,
+                sortByStatus: data.sortByStatus,
+                page: data.currentPage,
+            });
+        }, 300);
 
-    //     return () => clearTimeout(timeoutID);
-    // }, [data]);
+        return () => clearTimeout(timeoutID);
+    }, [data]);
 
     return (
         <div className='py-3'>
             <div className="d-flex justify-content-between align-items-center mb-5">
-                <input
-                    type="text"
-                    className="form-control shadow-sm"
-                    placeholder='Search product'
-                    style={{ width: '300px' }}
-                    value={data.searchByName}
-                    onChange={e => setData('searchByName', e.target.value)}
-                />
+                <div className="d-flex align-items-center gap-3">
+                    <input
+                        id="top-of-product-list"
+                        type="text"
+                        className="form-control shadow-sm"
+                        placeholder='Search product'
+                        style={{ width: '300px' }}
+                        value={data.searchByName}
+                        onChange={e => setData('searchByName', e.target.value)}
+                    />
 
-                <select
-                    class="form-select shadow-sm"
-                    style={{ width: '200px' }}
-                    value={data.sortByPrice}
-                    onChange={e => setData('sortByPrice', e.target.value)}
-                >
-                    <option value="low price">Less than ₱1,000</option>
-                    <option value="mid price">₱1,000 to ₱4,999</option>
-                    <option value="high price">₱5,000 and above</option>
-                </select>
-
-                <select
-                    class="form-select shadow-sm"
-                    style={{ width: '200px' }}
-                    value={data.sortByStatus}
-                    onChange={e => setData('sortByStatus', e.target.value)}
-                >
-                    <option value="In Stock">In Stock</option>
-                    <option value="Low Stock">Low Stock</option>
-                    <option value="Out of Stock">Out of Stock</option>
-                </select>
+                    <select
+                        class="form-select shadow-sm"
+                        style={{ width: '200px' }}
+                        value={data.sortByStatus}
+                        onChange={e => setData('sortByStatus', e.target.value)}
+                    >
+                        <option value="All">All</option>
+                        <option value="In Stock">In Stock</option>
+                        <option value="Low Stock">Low Stock</option>
+                        <option value="Out of Stock">Out of Stock</option>
+                    </select>
+                </div>
 
                 <Link
-                    href={route('admin.addProduct')}
+                    href={route('manager.addProduct')}
                     className='btn btn-success shadow-sm d-flex align-items-center gap-2'
                 >
                     <BsBagFill /> Add Product
@@ -113,7 +105,7 @@ function Product({ products }) {
                                         </div>
 
                                         <Link
-                                            href={route('admin.viewProduct', { product_id: product.id })}
+                                            href={route('manager.viewProduct', { product_id: product.id })}
                                             className="btn btn-success shadow w-100 d-flex justify-content-center align-items-center gap-2"
                                         >
                                             <FaEye /> View
@@ -131,8 +123,8 @@ function Product({ products }) {
                     )
                 }
 
-                {/* <div className="d-flex justify-content-between align-items-center bg-light p-3">
-                    <p className='fw-semibold'>{products.to} out of {products.total} Products</p>
+                <div className="d-flex justify-content-between align-items-center bg-light p-3">
+                    <p className='fw-semibold'>Showing {products.to} out of {products.total} Products</p>
 
                     <div>
                         {
@@ -145,8 +137,9 @@ function Product({ products }) {
                                         className={`btn btn-sm me-3 ${link.active ? 'btn-success' : 'btn-outline-success'}`}
                                         style={{ textDecoration: 'none' }}
                                         onClick={(e) => {
-                                            e.preventDefault();
                                             setData('page', new URL(link.url).searchParams.get('page'));
+
+                                            document.getElementById('top-of-product-list')?.scrollIntoView({ behavior: 'smooth' });
                                         }}
                                     />
 
@@ -162,7 +155,7 @@ function Product({ products }) {
                             ))
                         }
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     )

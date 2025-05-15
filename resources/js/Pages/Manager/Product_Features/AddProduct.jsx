@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import AdminLayout from '../../../Layout/AdminLayout'
 import { useRoute } from '../../../../../vendor/tightenco/ziggy/src/js';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import product from '../../../../../public/assets/images/product.png'
 import { toast, Toaster } from 'sonner';
 import { FaCircleInfo } from "react-icons/fa6";
+import ManagerLayout from '../../../Layout/ManagerLayout';
 
 function AddProduct() {
     const route = useRoute();
@@ -22,7 +22,7 @@ function AddProduct() {
     function submit(e) {
         e.preventDefault();
 
-        post(route('admin.storeProduct'), {
+        post(route('manager.storeProduct'), {
             onSuccess() {
                 reset();
 
@@ -80,7 +80,7 @@ function AddProduct() {
                 <nav aria-label="breadcrumb" className='mb-4'>
                     <ol class="breadcrumb fw-semibold">
                         <Link
-                            href={route('admin.product')}
+                            href={route('manager.product')}
                             className="breadcrumb-item text-muted"
                             style={{ textDecoration: 'none' }}
                         >
@@ -230,5 +230,5 @@ function AddProduct() {
     )
 }
 
-AddProduct.layout = page => <AdminLayout children={page} />
+AddProduct.layout = page => <ManagerLayout children={page} />
 export default AddProduct
